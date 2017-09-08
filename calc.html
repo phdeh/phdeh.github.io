@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&amp;subset=cyrillic" rel="stylesheet">
+    <style>
+        body {
+            padding: 0px;
+            font-size: 18pt;
+            font-family: 'Roboto Slab', serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        input {
+            float: right;
+            display:table-cell;
+            width: 150px;
+            margin:0 20px 20px 0;
+            font-size: 18pt;
+            font-family: 'Roboto Slab', serif;
+            border-style: solid;
+            border-color: black;
+            border-width: 3px;
+            appearance: textfield;
+            -moz-appearance: textfield;
+        }
+
+        input:focus {
+            border-color: red;
+            color: red;
+        }
+
+        img {
+            width: 100%;
+        }
+
+        .hfill {
+            content: " ";
+            display: inline-block;
+            width: 100%;
+        }
+
+        .content {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .variant {
+            width: 100%;
+            text-align: center;
+            font-size: 72pt;
+        }
+    </style>
+    <script>
+        function validate(evt, func) {
+            var theEvent = evt || window.event;
+            var key = theEvent.keyCode || theEvent.which;
+            key = String.fromCharCode( key );
+            var regex = /[0-9]|\./;
+            if( !regex.test(key) ) {
+                theEvent.returnValue = false;
+                if(theEvent.preventDefault) theEvent.preventDefault();
+            }
+            if (theEvent.keyCode == 13 || theEvent.keyCode == 32 || theEvent.keyCode == 9) {
+                func();
+            }
+        }
+        
+        function jumpToLabs() {
+            if (document.getElementsByName("labs")[0].value)
+                countLab();
+            else {
+                var el = document.getElementById("numberoflabs");
+                el.hidden = false;
+                el = document.getElementsByName("labs")[0];
+                el.focus();
+                var alignWithTop = true;
+                el.scrollIntoView(alignWithTop);
+            }
+        }
+        
+        function countLab() {
+            var el = document.getElementsByName("studak")[0];
+            var studak;
+            if (!el.value)
+                studak = el.placeholder;
+            else
+                studak = el.value;
+            el = document.getElementsByName("labs")[0];
+            var labs;
+            if (!el.value)
+                labs = el.placeholder;
+            else
+                labs = el.value;
+            el = document.getElementById("variantp");
+            el.hidden = false;
+            el = document.getElementById("variant");
+            el.hidden = false;
+            el.innerHTML = ((studak % labs == 0) ? labs : (studak % labs)) + "-й";
+            var alignWithTop = true;
+            el.scrollIntoView(alignWithTop);
+        }
+    </script>
+    <meta charset="UTF-8">
+    <title>Номер варианта</title>
+</head>
+<input id="blur" type="text" style="position: absolute; opacity: 0;">
+<div class="content">
+    <h2>Калькулятор номера варианта лабораторной по&nbsp;С.&nbsp;А.&nbsp;О.&nbsp;Д.&nbsp;</h2>
+
+    <p>
+        Возьмите свой студенческий билет и найдите в&nbsp;нём номер. На&nbsp;примере это номер «0365».
+    </p>
+    <img src="studak.svg">
+    <p>
+        Введите номер в это поле: <input name="studak" type="text" placeholder="0365" onkeypress="validate(event, jumpToLabs)" autofocus>
+    </p>
+    <p id="numberoflabs" hidden>
+        Теперь введите число лабораторных: <input name="labs" type="text" placeholder="25" onkeypress="validate(event, countLab)" autofocus>
+    </p>
+    <p id="variantp" hidden>
+        Ваш вариант:
+        <div id="variant" class="variant" hidden>
+            48
+        </div>
+    </p>
+</div>
+</body>
+</html>
