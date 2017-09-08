@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&amp;subset=cyrillic" rel="stylesheet">
     <style>
         body {
@@ -106,10 +107,15 @@
     </p>
     <img src="studak.svg">
     <p>
-        Введите номер в это поле: <input name="studak" type="text" placeholder="0365" onkeypress="validate(event, jumpToLabs)" autofocus>
+        Введите номер в это поле: <input name="studak" type="number" placeholder="0365"
+                                         onkeypress="validate(event, jumpToLabs)"
+                                         onblur="validate(event, jumpToLabs)" autofocus>
     </p>
     <p id="numberoflabs" hidden>
-        Теперь введите число лабораторных: <input name="labs" type="text" placeholder="25" onkeypress="validate(event, countLab)" autofocus>
+        Теперь введите число лабораторных: <input name="labs" type="number" placeholder="25"
+                                                  onkeypress="validate(event, countLab)"
+                                                  onblur="validate(event, countLab)"
+                                                  autofocus>
     </p>
     <p id="variantp" hidden>
         Ваш вариант:
