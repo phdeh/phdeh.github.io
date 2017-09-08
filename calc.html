@@ -63,6 +63,8 @@
                 if(theEvent.preventDefault) theEvent.preventDefault();
             }
             if (theEvent.keyCode == 13 || theEvent.keyCode == 32 || theEvent.keyCode == 9) {
+                if (!theEvent.target.value)
+                    theEvent.target.value = theEvent.target.placeholder;
                 func();
             }
         }
@@ -81,19 +83,9 @@
         }
         
         function countLab() {
-            var el = document.getElementsByName("studak")[0];
-            var studak;
-            if (!el.value)
-                studak = el.placeholder;
-            else
-                studak = el.value;
-            el = document.getElementsByName("labs")[0];
-            var labs;
-            if (!el.value)
-                labs = el.placeholder;
-            else
-                labs = el.value;
-            el = document.getElementById("variantp");
+            var studak = document.getElementsByName("studak")[0].value;
+            var labs = document.getElementsByName("labs")[0].value;
+            var el = document.getElementById("variantp");
             el.hidden = false;
             el = document.getElementById("variant");
             el.hidden = false;
