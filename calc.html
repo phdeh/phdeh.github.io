@@ -88,6 +88,8 @@
                             focusOnScroll();
                     }
                 };
+            } else {
+                document.getElementsByName("studak")[0].focus();
             }
         }
 
@@ -161,13 +163,11 @@
     <img src="studak.svg">
     <p>
         Введите номер в это поле: <input name="studak" type="number" pattern="\d*" placeholder="0365"
-                                         onkeypress="validate(false, event, event.target, jumpToLabs)"
-                                         autofocus>
+                                         onkeypress="validate(false, event, event.target, jumpToLabs)">
     </p>
     <p id="numberoflabs" hidden>
         Теперь введите число лабораторных: <input name="labs" type="number" pattern="\d*" placeholder="25"
-                                                  onkeypress="validate(false, event, event.target, countLab)"
-                                                  autofocus>
+                                                  onkeypress="validate(false, event, event.target, countLab)"s>
     </p>
     <div class="button_container">
         <div id="submitter" class="button" onclick=
