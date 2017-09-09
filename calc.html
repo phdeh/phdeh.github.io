@@ -150,12 +150,12 @@
     </p>
     <img src="studak.svg">
     <p>
-        Введите номер в это поле: <input name="studak" type="number" placeholder="0365"
+        Введите номер в это поле: <input name="studak" type="number" pattern="\d*" placeholder="0365"
                                          onkeypress="validate(false, event, event.target, jumpToLabs)"
                                          autofocus>
     </p>
     <p id="numberoflabs" hidden>
-        Теперь введите число лабораторных: <input name="labs" type="number" placeholder="25"
+        Теперь введите число лабораторных: <input name="labs" type="number" pattern="\d*" placeholder="25"
                                                   onkeypress="validate(event, event.target, countLab)"
                                                   autofocus>
     </p>
