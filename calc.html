@@ -80,11 +80,25 @@
         }
 
         function makeButtonIfMobile() {
-            if (detectmob())
+            if (detectmob()) {
                 document.getElementById("submitter").hidden = false;
+                window.onscroll = function(ev) {
+                    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+                        if (schollDown)
+                            focusOnScroll();
+                    }
+                };
+            }
+        }
+
+        var schollDown = true;
+
+        function focusOnScroll() {
+            document.getElementsByName("studak")[0].focus();
         }
 
         function validate(forced, evt, target, func) {
+            schollDown = false;
             var theEvent = evt || window.event;
             if (theEvent !== null) {
                 var key = theEvent.keyCode || theEvent.which;
@@ -157,7 +171,7 @@
     </p>
     <div class="button_container">
         <div id="submitter" class="button" onclick=
-                "validate(true, event, document.getElementsByName('studak')[0], jumpToLabs)" hidden>Ввести
+                "validate(true, event, document.getElementsByName('studak')[0], jumpToLabs); schollDown = false;" hidden>Ввести
         </div>
     </div>
     <p id="variantp" hidden> Ваш вариант: </p>
