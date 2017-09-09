@@ -70,27 +70,23 @@
     </style>
     <script>
         function detectmob() {
-            if( navigator.userAgent.match(/Android/i)
+            return !!(navigator.userAgent.match(/Android/i)
                 || navigator.userAgent.match(/webOS/i)
                 || navigator.userAgent.match(/iPhone/i)
                 || navigator.userAgent.match(/iPad/i)
                 || navigator.userAgent.match(/iPod/i)
                 || navigator.userAgent.match(/BlackBerry/i)
-                || navigator.userAgent.match(/Windows Phone/i)
-            ){
-                return true;
-            }
-            else {
-                return false;
-            }
+                || navigator.userAgent.match(/Windows Phone/i));
         }
+
         function makeButtonIfMobile() {
             if (detectmob())
                 document.getElementById("submitter").hidden = false;
         }
+
         function validate(forced, evt, target, func) {
-            if (evt !== null) {
-                var theEvent = evt || window.event;
+            var theEvent = evt || window.event;
+            if (theEvent !== null) {
                 var key = theEvent.keyCode || theEvent.which;
                 key = String.fromCharCode(key);
                 var regex = /[0-9]|\./;
@@ -156,12 +152,13 @@
     </p>
     <p id="numberoflabs" hidden>
         Теперь введите число лабораторных: <input name="labs" type="number" pattern="\d*" placeholder="25"
-                                                  onkeypress="validate(event, event.target, countLab)"
+                                                  onkeypress="validate(false, event, event.target, countLab)"
                                                   autofocus>
     </p>
     <div class="button_container">
         <div id="submitter" class="button" onclick=
-                "validate(true, event, document.getElementsByName('studak')[0], jumpToLabs)" hidden>Ввести</div>
+                "validate(true, event, document.getElementsByName('studak')[0], jumpToLabs)" hidden>Ввести
+        </div>
     </div>
     <p id="variantp" hidden> Ваш вариант: </p>
     <div id="variant" class="variant" hidden></div>
