@@ -17,7 +17,7 @@
             float: right;
             display: table-cell;
             width: 150px;
-            margin: 0 20px 20px 0;
+            padding: 0 20px 20px 0;
             font-size: 18pt;
             font-family: 'Roboto Slab', serif;
             border: solid black 3px;
@@ -136,6 +136,7 @@
 
         function countLab() {
             var studak = document.getElementsByName("studak")[0].value;
+            studak = studak.charAt(studak.length - 2) + studak.charAt(studak.length - 1)
             var labs = document.getElementsByName("labs")[0].value;
             var el = document.getElementById("variantp");
             el.hidden = false;
