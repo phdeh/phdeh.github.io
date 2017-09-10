@@ -136,7 +136,8 @@
 
         function countLab() {
             var studak = document.getElementsByName("studak")[0].value;
-            studak = studak.charAt(studak.length - 2) + studak.charAt(studak.length - 1)
+            if (studak.length > 2)
+                studak = studak.charAt(studak.length - 2) + studak.charAt(studak.length - 1)
             var labs = document.getElementsByName("labs")[0].value;
             var el = document.getElementById("variantp");
             el.hidden = false;
