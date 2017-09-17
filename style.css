@@ -1,7 +1,7 @@
 body {
     background: #F3F3F3;
     padding: 0;
-    font-size: 18pt;
+    font-size: 16pt;
     font-family: 'Roboto Slab', serif;
     display: flex;
     align-items: center;
@@ -30,8 +30,16 @@ input:focus {
     color: #DD0000;
 }
 
-img {
+.img_container {
     width: 100%;
+    flex-direction: row-reverse;
+    display: flex;
+    align-items: flex-end;
+}
+
+.img_container > img {
+    width: 100%;
+    max-width: 600px;
 }
 
 .content {
@@ -65,6 +73,11 @@ textarea {
     -moz-appearance: textfield;
 }
 
+.question {
+    width: 100%;
+    padding-bottom: 50px;
+}
+
 .tooltip {
     color: #DD0000;
     position: relative;
@@ -78,8 +91,6 @@ textarea {
     color: #fff;
     text-align: center;
     padding: 5px 0;
-
-    /* Position the tooltip text */
     position: absolute;
     z-index: 1;
     bottom: 125%;

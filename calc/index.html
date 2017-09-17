@@ -96,18 +96,18 @@
     <h2>Калькулятор номера варианта лабораторной по&nbsp;С.&nbsp;А.&nbsp;О.&nbsp;Д.&nbsp;</h2>
     <div class="author">@ <a target="_blank" href="https://vk.com/im?sel=380497467">Воробьев</a>, гр. № 4631</div>
 
-    <p>
+    <div>
         Возьмите свой студенческий билет и найдите в&nbsp;нём номер. На&nbsp;примере это номер «0365».
-    </p>
-    <img src="studak.svg">
-    <p>
+    </div>
+    <div class="img_container"><img src="studak.svg"></div>
+    <div class="question">
         Введите номер в это поле: <input name="studak" type="number" pattern="\d*" placeholder="0365"
                                          onkeypress="validate(false, event, event.target, jumpToLabs)">
-    </p>
-    <p id="numberoflabs" hidden>
+    </div>
+    <div  class="question" id="numberoflabs" hidden>
         Теперь введите число лабораторных: <input name="labs" type="number" pattern="\d*" placeholder="25"
                                                   onkeypress="validate(false, event, event.target, countLab)" s>
-    </p>
+    </div>
     <div class="button_container">
         <div id="submitter" class="button" onclick=
                 "validate(true, event, document.getElementsByName('studak')[0], jumpToLabs); schollDown = false;"
