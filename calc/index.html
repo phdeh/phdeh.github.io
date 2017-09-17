@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&amp;subset=cyrillic" rel="stylesheet">
+    <link href="https://phdeh.github.io/style.css" rel="stylesheet">
+    <script>
+        function detectmob() {
+            return !!(navigator.userAgent.match(/Android/i)
+                || navigator.userAgent.match(/webOS/i)
+                || navigator.userAgent.match(/iPhone/i)
+                || navigator.userAgent.match(/iPad/i)
+                || navigator.userAgent.match(/iPod/i)
+                || navigator.userAgent.match(/BlackBerry/i)
+                || navigator.userAgent.match(/Windows Phone/i));
+        }
+
+        function makeButtonIfMobile() {
+            if (detectmob()) {
+                document.getElementById("submitter").hidden = false;
+                window.onscroll = function (ev) {
+                    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+                        if (schollDown)
+                            focusOnScroll();
+                    }
+                };
+            } else {
+                document.getElementsByName("studak")[0].focus();
+            }
+        }
+
+        var schollDown = true;
+
+        function focusOnScroll() {
+            document.getElementsByName("studak")[0].focus();
+        }
+
+        function validate(forced, evt, target, func) {
+            schollDown = false;
+            var theEvent = evt || window.event;
+            if (theEvent !== null) {
+                var key = theEvent.keyCode || theEvent.which;
+                key = String.fromCharCode(key);
+                var regex = /[0-9]|\./;
+                if (!regex.test(key)) {
+                    theEvent.returnValue = false;
+                    if (theEvent.preventDefault) theEvent.preventDefault();
+                }
+            }
+            if (forced || theEvent.keyCode === 13 || theEvent.keyCode === 32 || theEvent.keyCode === 9) {
+                if (!target.value)
+                    target.value = target.placeholder;
+                func();
+            }
+        }
+
+        function jumpToLabs() {
+            if (document.getElementsByName("labs")[0].value)
+                countLab();
+            else {
+                var el = document.getElementById("numberoflabs");
+                el.hidden = false;
+                el = document.getElementsByName("labs")[0];
+                el.focus();
+                var alignWithTop = true;
+                el.scrollIntoView(alignWithTop);
+                document.getElementById("submitter").onclick = function () {
+                    validate(true, event, document.getElementsByName('labs')[0], countLab)
+                }
+            }
+        }
+
+        function countLab() {
+            var studak = document.getElementsByName("studak")[0].value;
+            if (studak.length > 2)
+                studak = studak.charAt(studak.length - 2) + studak.charAt(studak.length - 1)
+            var labs = document.getElementsByName("labs")[0].value;
+            var el = document.getElementById("variantp");
+            el.hidden = false;
+            el = document.getElementById("variant");
+            el.hidden = false;
+            el.innerHTML = ((studak % labs === 0) ? labs : (studak % labs)) + "-й";
+            var alignWithTop = true;
+            el.scrollIntoView(alignWithTop);
+            document.getElementById("submitter").onclick = function () {
+                validate(true, event, document.getElementsByName('labs')[0], jumpToLabs)
+            }
+        }
+    </script>
+    <title>Номер варианта</title>
+</head>
+<body onload="makeButtonIfMobile();">
+<input id="blur" type="text" style="position: absolute; opacity: 0;">
+<div class="content">
+    <h2>Калькулятор номера варианта лабораторной по&nbsp;С.&nbsp;А.&nbsp;О.&nbsp;Д.&nbsp;</h2>
+    <div class="author">@ <a target="_blank" href="https://vk.com/im?sel=380497467">Воробьев</a>, гр. № 4631</div>
+
+    <p>
+        Возьмите свой студенческий билет и найдите в&nbsp;нём номер. На&nbsp;примере это номер «0365».
+    </p>
+    <img src="studak.svg">
+    <p>
+        Введите номер в это поле: <input name="studak" type="number" pattern="\d*" placeholder="0365"
+                                         onkeypress="validate(false, event, event.target, jumpToLabs)">
+    </p>
+    <p id="numberoflabs" hidden>
+        Теперь введите число лабораторных: <input name="labs" type="number" pattern="\d*" placeholder="25"
+                                                  onkeypress="validate(false, event, event.target, countLab)" s>
+    </p>
+    <div class="button_container">
+        <div id="submitter" class="button" onclick=
+                "validate(true, event, document.getElementsByName('studak')[0], jumpToLabs); schollDown = false;"
+             hidden>Ввести
+        </div>
+    </div>
+    <p id="variantp" hidden> Ваш вариант: </p>
+    <div id="variant" class="variant" hidden></div>
+</div>
+</body>
+</html>
