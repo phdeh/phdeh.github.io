@@ -129,8 +129,10 @@ textarea:disabled {
     font-size: 24pt;
     color: white;
     cursor: pointer;
-    min-width: 300px;
-    max-width: 100%;
+    min-width: 200px;
+    max-width: calc(100% - 25px);
+    padding-left: 10px;
+    padding-right: 10px;
     height: 48pt;
     box-shadow: 0 15px 0 rgba(0, 0, 0, 0.25);
     line-height: 45pt;
@@ -148,8 +150,8 @@ textarea:disabled {
     font-size: 24pt;
     color: white;
     cursor: default;
-    min-width: 300px;
-    max-width: 100%;
+    min-width: 200px;
+    max-width: calc(100% - 25px);
     height: 48pt;
     transform: translate(0px, 5px);
     box-shadow: 0 10px 0 rgba(0, 0, 0, 0.3);
