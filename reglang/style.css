@@ -1,5 +1,5 @@
 .error {
-    width: 100%;
+    width: calc(100% - 19px);;
     padding: 10px;
     background: #DD0000;
     color: white;

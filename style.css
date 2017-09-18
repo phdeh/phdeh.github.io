@@ -44,8 +44,8 @@ input:focus {
 }
 
 .content {
-    margin-left: -27px;
-    width: calc(100% - 40px);
+    margin: 10px;
+    width: 100%;
     max-width: 800px;
 }
 
@@ -68,7 +68,7 @@ a {
 
 textarea {
     resize: vertical;
-    width: 100%;
+    width: calc(100% - 25px);
     height: 200px;
     padding: 0 20px 20px 0;
     font-size: 18pt;
