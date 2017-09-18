@@ -36,15 +36,15 @@
         <textarea id="production_rules" onkeypress="inputP(event)">
 S → A,
 A → aB,
-B → cA | c</textarea>
+B → cA | c⊥</textarea>
 
         <div id="production_error" class="error" hidden></div>
-        } — множество <u>правил вывода</u><sup><span class="tooltip">*<span
+        } — множество <u>правил вывода</u>,<sup><span class="tooltip">*<span
             class="tooltiptext">Набор стрелочки — «->».</span></span><span class="tooltip">*<span
-            class="tooltiptext">На данный момент поддерживается только регулярная грамматика.</span></span></sup>,
+            class="tooltiptext">На данный момент поддерживается только регулярная грамматика.</span></span></sup>
         </p>
         <p>
-            S — <u>аксиома</u>, начальный символ.
+            S — <u>аксиома</u>, начальный нетерминал.
         </p>
         <div class="button_container">
             <div id="submit_production" class="button" onclick="analyze();"> Принять</div>
