@@ -4,44 +4,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&amp;subset=cyrillic" rel="stylesheet">
     <link href="../style.css" rel="stylesheet">
-    <script>
-    </script>
+    <link href="style.css" rel="stylesheet">
+    <script src="js/main.js"></script>
+    <script src="js/alalyzer.js"></script>
     <meta charset="UTF-8">
-    <title>Разбор формальных языков</title>
+    <title>Разбор регулярных языков</title>
 </head>
-<body onload="makeButtonIfMobile();">
+<body onload="">
 <input id="blur" type="text" style="position: absolute; opacity: 0;">
 <div class="content">
-    <h2>Разбор формальных языков</h2>
-    <div class="author">@ <a target="_blank" href="https://vk.com/im?sel=380497467">Воробьев</a>, гр. № 4631</div>
-    <p>
-        Пусть <i>G</i> = (<i>V<sub>T</sub></i>, <i>V<sub>N</sub></i>, <i>P</i>, S), где
-    </p>
-    <p>
-        <i>V<sub>T</sub></i> = {a, b, ..., y, z,
-        λ<sup><span class="tooltip">*<span class="tooltiptext">Пустая строка —<br/>— вводить «/\».</span></span></sup>,
-        ⊥<sup><span class="tooltip">*<span class="tooltiptext">Конец строки —<br/>— вводить «_|_».</span></span></sup>} — множество <u>терминалов</u>,
-    </p>
-    <p>
-        <i>V<sub>N</sub></i> = {A, B, ..., S, ..., Y, Z} — множество <u>нетерминалов</u>,
-    </p>
-    <p>
-        <i>P</i> = {
-        <textarea>
-S → ABC,
-A → AA | a,
-B → BB | b,
-C → CC | c
-        </textarea>
-        } — множество <u>правил вывода</u><sup><span class="tooltip">*<span class="tooltiptext">Набор стрелочки — «->».</span></span></sup>,
-    </p>
-    <p>
-        S — <u>аксиома</u>, начальный символ.
-    </p>
-    <div class="button_container">
-        <div class="button">
-            Принять
+    <div class="exercise" id="work1">
+        <h2>Формальная грамматика</h2>
+        <div class="author">@ <a target="_blank" href="https://vk.com/im?sel=380497467">Воробьев</a>, гр. № 4631</div>
+        <p>
+            Пусть <i>G</i> = (<i>V<sub>T</sub></i>, <i>V<sub>N</sub></i>, <i>P</i>, S), где
+        </p>
+        <p>
+            <i>V<sub>T</sub></i> = {a, b, ..., y, z,
+            λ<sup><span class="tooltip">*<span
+                class="tooltiptext">Пустая строка —<br/>— вводить «/\».</span></span></sup>,
+            ⊥<sup><span class="tooltip">*<span
+                class="tooltiptext">Конец строки —<br/>— вводить «_|_».</span></span></sup>} — множество
+            <u>терминалов</u>,
+        </p>
+        <p>
+            <i>V<sub>N</sub></i> = {A, B, ..., S, ..., Y, Z} — множество <u>нетерминалов</u>,
+        </p>
+        <p>
+            <i>P</i> = {
+        <div id="state"></div>
+        <textarea id="production_rules" onkeypress="inputP(event)">
+S → A,
+A → aB,
+B → cA | c</textarea>
+
+        <div class="error" hidden></div>
+        } — множество <u>правил вывода</u><sup><span class="tooltip">*<span
+            class="tooltiptext">Набор стрелочки — «->».</span></span></sup>,
+        </p>
+        <p>
+            S — <u>аксиома</u>, начальный символ.
+        </p>
+        <div class="button_container">
+            <div id="submit_production" class="button" onclick="analyze();">
+                Принять
+            </div>
         </div>
+    </div>
+    <div id="product_word" class="exercise" hidden>
+        <h2>Попробуем вывести какое-либо слово для данной грамматики:</h2>
+        <div class="variant">
+            <u>S</u>
+        </div>
+        <p>Что мы можем сделать с данной сентенциальной формой?</p>
+        <div id="production_cases" class="button_container"></div>
     </div>
 </div>
 </body>

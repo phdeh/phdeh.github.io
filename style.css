@@ -49,6 +49,8 @@ input:focus {
 
 .button_container {
     width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -71,6 +73,10 @@ textarea {
     font-family: 'Roboto Slab', serif;
     border: solid black 3px;
     -moz-appearance: textfield;
+}
+
+textarea:disabled {
+    background: inherit;
 }
 
 .question {
@@ -96,10 +102,11 @@ textarea {
     bottom: 125%;
     left: 50%;
     margin-left: -60px;
-
-    /* Fade in tooltip */
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: 0 25px 0 rgba(0, 0, 0, 0.25);
     opacity: 0;
-    transition: opacity 0.5s;
+    transition: opacity 0.3s;
 }
 
 .tooltip:hover .tooltiptext {
@@ -115,8 +122,30 @@ textarea {
     min-width: 300px;
     max-width: 100%;
     height: 48pt;
+    box-shadow: 0 15px 0 rgba(0, 0, 0, 0.25);
     line-height: 45pt;
     text-align: center;
+    margin: 10px;
+}
+
+.disabled_button {
+    background: #777777;
+    font-size: 24pt;
+    color: white;
+    cursor: default;
+    min-width: 300px;
+    max-width: 100%;
+    height: 48pt;
+    transform: translate(0px, 5px);
+    box-shadow: 0 10px 0 rgba(0, 0, 0, 0.3);
+    line-height: 45pt;
+    text-align: center;
+    margin: 10px;
+}
+
+.button:hover {
+    transform: translate(0px, 5px);
+    box-shadow: 0 10px 0 rgba(0, 0, 0, 0.3);
 }
 
 .variant {
