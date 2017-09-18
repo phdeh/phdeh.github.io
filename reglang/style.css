@@ -8,3 +8,10 @@
 .exercise {
     margin-bottom: 50px;
 }
+
+.ul {
+    display: inline;
+    text-decoration: underline;
+    text-decoration-color: #DD0000;
+    -webkit-text-decoration-color: #DD0000;
+}

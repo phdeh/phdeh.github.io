@@ -115,6 +115,12 @@ textarea:disabled {
 }
 
 .button {
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+
     background: #DD0000;
     font-size: 24pt;
     color: white;
@@ -129,6 +135,11 @@ textarea:disabled {
 }
 
 .disabled_button {
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
     background: #777777;
     font-size: 24pt;
     color: white;
@@ -149,6 +160,8 @@ textarea:disabled {
 }
 
 .variant {
+    max-width: 100%;
+    word-break: break-all;
     width: 100%;
     text-align: center;
     font-size: 72pt;

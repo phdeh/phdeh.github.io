@@ -253,8 +253,8 @@ function findWordProductions() {
     for (i in makeWord) {
         const c = makeWord[i];
         if (c in productionRules) {
-            var w = makeWord.substring(0, i) + "<u>" +
-                makeWord.substring(i, i - -1) + "</u>" +
+            var w = makeWord.substring(0, i) + "<div class='ul'>" +
+                makeWord.substring(i, i - -1) + "</div>" +
                 makeWord.substring(i - -1, makeWord.length);
 
 
@@ -264,8 +264,8 @@ function findWordProductions() {
 
             pc.innerHTML = '';
             for (j in pr) {
-                var a = makeWord.substring(0, i) + pr[j] +
-                    makeWord.substring(i - -1, makeWord.length);
+                var a = (makeWord.substring(0, i) + pr[j] +
+                    makeWord.substring(i - -1, makeWord.length)).replace('λ', '');
                 pc.innerHTML += '<div class="button" onclick="replaceProduction(\''+a+'\')"> ' + c + ' → ' + pr[j] + ' </div>';
             }
             return;
