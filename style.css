@@ -5,8 +5,9 @@ body {
     font-size: 16pt;
     font-family: 'Roboto Slab', serif;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 input {
@@ -43,10 +44,14 @@ input:focus {
     max-width: 600px;
 }
 
-.content {
-    margin: 10px;
+.content_block {
     width: 100%;
     max-width: 800px;
+}
+
+.content {
+    margin: 10px;
+    width: calc(100% - 20px);
 }
 
 .button_container {
@@ -169,12 +174,34 @@ textarea:disabled {
     max-width: 100%;
     word-break: break-all;
     width: 100%;
+    font-weight: 200;
     text-align: center;
-    font-size: 72pt;
+    font-size: 81pt;
+}
+
+.header {
+    background: black;
+    color: white;
+    font-weight: bold;
+    font-size: 14pt;
+    width: 100%;
+    text-align: center;
+}
+
+.cite {
+    float: left;
+    margin-left: 25px;
+}
+
+
+.title {
+    float: right;
+    margin-right: 25px;
 }
 
 .author {
-    font-size: 15pt;
+    font-size: 10pt;
+    font-weight: bold;
     color: gray;
     width: 100%;
     text-align: right;
