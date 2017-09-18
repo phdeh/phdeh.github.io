@@ -222,6 +222,8 @@ function analyze() {
     makeWord = 'S';
     document.getElementById("change_production").hidden = false;
     findWordProductions();
+    var element = document.getElementById("production_cases");
+    element.scrollIntoView(true);
 }
 
 function analyzeError(index, message) {
@@ -241,6 +243,8 @@ function change() {
         analyze();
     }
     document.getElementById("change_production").hidden = true;
+    var element = document.getElementById("production_rules");
+    element.scrollIntoView(true);
 }
 
 var makeWord = 'S';
