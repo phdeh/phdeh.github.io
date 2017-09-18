@@ -220,6 +220,7 @@ function analyze() {
     document.getElementById("product_word").hidden = false;
     b.onclick = null;
     makeWord = 'S';
+    document.getElementById("change_production").hidden = false;
     findWordProductions();
 }
 
@@ -228,6 +229,18 @@ function analyzeError(index, message) {
     var v = document.getElementsByClassName("error")[0];
     v.innerHTML = message;
     v.hidden = false;
+}
+
+function change() {
+    document.getElementById("production_rules").disabled = false;
+    var b = document.getElementById("submit_production");
+    b.className = "button";
+    b.innerHTML = "Принять";
+    document.getElementById("product_word").hidden = true;
+    b.onclick = function () {
+        analyze();
+    }
+    document.getElementById("change_production").hidden = true;
 }
 
 var makeWord = 'S';
