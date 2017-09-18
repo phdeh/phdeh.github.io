@@ -38,16 +38,17 @@ S → A,
 A → aB,
 B → cA | c</textarea>
 
-        <div class="error" hidden></div>
+        <div id="production_error" class="error" hidden></div>
         } — множество <u>правил вывода</u><sup><span class="tooltip">*<span
-            class="tooltiptext">Набор стрелочки — «->».</span></span></sup>,
+            class="tooltiptext">Набор стрелочки — «->».</span></span><span class="tooltip">*<span
+            class="tooltiptext">На данный момент поддерживается только регулярная грамматика.</span></span></sup>,
         </p>
         <p>
             S — <u>аксиома</u>, начальный символ.
         </p>
         <div class="button_container">
-            <div id="submit_production" class="button" onclick="analyze();"> Принять </div>
-            <div id="change_production" class="button" onclick="change();" hidden> Изменить </div>
+            <div id="submit_production" class="button" onclick="analyze();"> Принять</div>
+            <div id="change_production" class="button" onclick="change();" hidden> Изменить</div>
         </div>
     </div>
     <div id="product_word" class="exercise" hidden>
@@ -55,7 +56,15 @@ B → cA | c</textarea>
         <div class="variant">
             <u>S</u>
         </div>
-        <p>Что мы можем сделать с данной сентенциальной формой?</p>
+        <div id="word_error" hidden>
+            <div class="error">Похоже, что мы ничего не можем вывести из этого нетерминала:
+                при составлении правил продукции, очевидно, была допущена ошибка.
+                Попробуйте вывести слово ещё раз или измените правила грамматики.</div>
+            <div class="button_container">
+                <div class="button" onclick="analyze();"> Ещё раз</div>
+                <div class="button" onclick="change();"> Изменить</div>
+            </div>
+        </div>
         <div id="production_cases" class="button_container"></div>
     </div>
 </div>

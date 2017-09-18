@@ -131,7 +131,8 @@ const LAST_SYMBOL = '\0';
 var productionRules;
 
 function analyze() {
-    var v = document.getElementsByClassName("error")[0].hidden = true;
+    document.getElementById("production_error").hidden = true;
+    document.getElementById("word_error").hidden = true;
     var pr = {};
     var state = ANALYZER_STATE.S;
     var currNonterminal = '';
@@ -234,6 +235,7 @@ function analyzeError(index, message) {
 }
 
 function change() {
+    document.getElementById("word_error").hidden = true;
     document.getElementById("production_rules").disabled = false;
     var b = document.getElementById("submit_production");
     b.className = "button";
@@ -252,13 +254,16 @@ var makeWord = 'S';
 function findWordProductions() {
     for (i in makeWord) {
         const c = makeWord[i];
-        if (c in productionRules) {
+        if (NON_TERMINAL.indexOf(c) != -1) {
             var w = makeWord.substring(0, i) + "<div class='ul'>" +
                 makeWord.substring(i, i - -1) + "</div>" +
                 makeWord.substring(i - -1, makeWord.length);
-
-
             document.getElementsByClassName("variant")[0].innerHTML = w;
+            if (!(c in productionRules)) {
+                document.getElementById("word_error").hidden = false;
+                document.getElementById("production_cases").innerHTML = "";
+                return;
+            }
             var pr = productionRules[c];
             var pc = document.getElementById("production_cases");
 
@@ -266,7 +271,7 @@ function findWordProductions() {
             for (j in pr) {
                 var a = (makeWord.substring(0, i) + pr[j] +
                     makeWord.substring(i - -1, makeWord.length)).replace('λ', '');
-                pc.innerHTML += '<div class="button" onclick="replaceProduction(\''+a+'\')"> ' + c + ' → ' + pr[j] + ' </div>';
+                pc.innerHTML += '<div class="button" onclick="replaceProduction(\'' + a + '\')"> ' + c + ' → ' + pr[j] + ' </div>';
             }
             return;
         }
