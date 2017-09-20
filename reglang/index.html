@@ -33,10 +33,10 @@
         <p>
             <i>P</i> = {
         <div id="state"></div>
-        <textarea id="production_rules" onkeypress="inputP(event)">
+        <textarea spellcheck="false" id="production_rules" onkeypress="inputP(event)">
 S → A,
 A → aB,
-B → cA | c⊥</textarea>
+B → bA | b⊥</textarea>
 
         <div id="production_error" class="error" hidden></div>
         } — множество <u>правил вывода</u>,<sup><span class="tooltip">*<span
@@ -52,20 +52,20 @@ B → cA | c⊥</textarea>
         </div>
     </div>
     <div id="product_word" class="exercise" hidden>
-        <h2>Попробуем вывести какое-либо слово для данной грамматики:</h2>
+        <p>Попробуем вывести какое-либо слово для данной грамматики:</p>
         <div class="variant">
             <u>S</u>
         </div>
-        <div id="word_error" hidden>
-            <div class="error">Похоже, что мы ничего не можем вывести из этого нетерминала:
-                при составлении правил продукции, очевидно, была допущена ошибка.
-                Попробуйте вывести слово ещё раз или измените правила грамматики.</div>
+        <div id="production_cases" class="button_container"></div>
+        <div id="make_word_worse">
+            <p>
+                Слово языка получено. Его можно сгенерировать ещё раз, искаверкать вручную и продолжить использовать.
+            </p>
             <div class="button_container">
                 <div class="button" onclick="analyze();"> Ещё раз</div>
-                <div class="button" onclick="change();"> Изменить</div>
+                <div class="button" id="machine_button" onclick="goToStateMachine();"> Продолжить</div>
             </div>
         </div>
-        <div id="production_cases" class="button_container"></div>
     </div>
 </div>
 </body>

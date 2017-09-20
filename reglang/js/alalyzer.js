@@ -4,11 +4,14 @@ const replacementsForP = {
     "->": "→"
 };
 
+var justReplaced = false;
+
 var stateKey = 0;
 
 var possibleReplacement;
 
 function inputP(evt) {
+    justReplaced = false;
     var state = document.getElementById("state");
     var theEvent = evt || window.event;
     var key = theEvent.keyCode || theEvent.which;
@@ -30,6 +33,7 @@ function inputP(evt) {
                 possibleReplacement.length + 1) + replacementsForP[possibleReplacement]
                 + theEvent.target.value.substring(caret, theEvent.target.value.length - possibleReplacement.length + 3);
             setCaret(theEvent.target, caret - possibleReplacement.length + 2);
+            justReplaced = true;
             if (theEvent.preventDefault)
                 theEvent.preventDefault();
             stateKey = 0;
@@ -94,6 +98,8 @@ function setCaretToChar(node, index) {
     }
 }
 
+const PRODUCTION_STEPS = 50;
+
 const ANALYZER_STATE = {
     S: "S",
     N: "N",
@@ -132,7 +138,7 @@ var productionRules;
 
 function analyze() {
     document.getElementById("production_error").hidden = true;
-    document.getElementById("word_error").hidden = true;
+    document.getElementById("make_word_worse").hidden = true;
     var pr = {};
     var state = ANALYZER_STATE.S;
     var currNonterminal = '';
@@ -210,10 +216,21 @@ function analyze() {
                 return;
             }
             default:
-                alert("Недопустимое состояние.")
+                analyzeError(-1, "Недопустимое состояние автомата.");
         }
     }
     productionRules = pr;
+    if (!("S" in productionRules)) {
+        analyzeError(-1, "В правилах продукции не задано правил для S.");
+        return;
+    }
+    for (prod in productionRules) {
+        const prods = isProductable(prod, PRODUCTION_STEPS);
+        if (!prods) {
+            analyzeError(-1, "Вывод цепочки терминалов из " + prod + " невозможен, либо превышает " + PRODUCTION_STEPS + " шагов.");
+            return;
+        }
+    }
     document.getElementById("production_rules").disabled = true;
     var b = document.getElementById("submit_production");
     b.className = "disabled_button";
@@ -228,14 +245,14 @@ function analyze() {
 }
 
 function analyzeError(index, message) {
-    setCaretToChar(document.getElementById("production_rules"), index);
+    if (index != -1) setCaretToChar(document.getElementById("production_rules"), index);
     var v = document.getElementsByClassName("error")[0];
     v.innerHTML = message;
     v.hidden = false;
 }
 
 function change() {
-    document.getElementById("word_error").hidden = true;
+    document.getElementById("make_word_worse").hidden = true;
     document.getElementById("production_rules").disabled = false;
     var b = document.getElementById("submit_production");
     b.className = "button";
@@ -260,7 +277,7 @@ function findWordProductions() {
                 makeWord.substring(i - -1, makeWord.length);
             document.getElementsByClassName("variant")[0].innerHTML = w;
             if (!(c in productionRules)) {
-                document.getElementById("word_error").hidden = false;
+                document.getElementById("make_word_worse").hidden = false;
                 document.getElementById("production_cases").innerHTML = "";
                 return;
             }
@@ -276,11 +293,86 @@ function findWordProductions() {
             return;
         }
     }
-    document.getElementsByClassName("variant")[0].innerHTML = makeWord;
+    document.getElementsByClassName("variant")[0].innerHTML = "<input spellcheck='false' value='" +
+        makeWord + "' onkeypress='inputP(event); checkWord(event);'>";
     document.getElementById("production_cases").innerHTML = "";
+    const makeWorse = document.getElementById("make_word_worse");
+    makeWorse.hidden = false;
+    makeWorse.scrollIntoView(true);
 }
 
 function replaceProduction(replacement) {
     makeWord = replacement;
     findWordProductions();
+}
+
+function isProductable(nonterminal, availableSteps) {
+    if (!(nonterminal in productionRules) || availableSteps <= 0)
+        return false;
+    else {
+        const pr = productionRules[nonterminal];
+        for (i in pr) {
+            const productionRule = pr[i];
+            var productable = true;
+            for (var j = 0; j < productionRule.length; ++j) {
+                const c = productionRule.charAt(j);
+                if (NON_TERMINAL.indexOf(c) != -1) {
+                    productable = false;
+                    break;
+                }
+            }
+            if (productable)
+                return true;
+        }
+        for (i in pr) {
+            const productionRule = pr[i];
+            for (var j = 0; j < productionRule.length; ++j) {
+                const c = productionRule.charAt(j);
+                if (NON_TERMINAL.indexOf(c) != -1) {
+                    const prod = isProductable(c, availableSteps - 1);
+                    if (prod)
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
+}
+
+function checkWord(evt) {
+    var theEvent = evt || window.event;
+    var target = theEvent.target;
+    const word = target.value;
+    var checked = true;
+    var key = theEvent.keyCode || theEvent.which;
+    key = String.fromCharCode(key);
+    if (!justReplaced && key && TERMINAL.indexOf(key) == -1)
+        checked = false;
+    if (checked)
+        for (var j = 0; j < word.length; ++j) {
+            const c = word.charAt(j);
+            if (TERMINAL.indexOf(c) == -1) {
+                checked = false;
+                break;
+            }
+        }
+    if (checked) {
+        target.style.borderColor = "black";
+        target.style.color = "black";
+        var b = document.getElementById("machine_button");
+        b.className = "button";
+        b.onclick = function () {
+            goToStateMachine();
+        };
+    } else {
+        target.style.borderColor = "red";
+        target.style.color = "red";
+        var b = document.getElementById("machine_button");
+        b.className = "disabled_button";
+        b.onclick = null;
+    }
+}
+
+function goToStateMachine() {
+
 }
