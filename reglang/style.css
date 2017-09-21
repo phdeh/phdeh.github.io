@@ -16,7 +16,7 @@
     -webkit-text-decoration-color: #DD0000;
 }
 
-input {
+.variant > input {
     float: none;
     width: calc(100% - 25px);
     height: auto;
@@ -28,8 +28,54 @@ input {
     -moz-appearance: textfield;
 }
 
-input:disabled {
+.variant > input:disabled {
     background: inherit;
     color: black;
     border: solid gray 3px;
+}
+
+.state_machine {
+    background: #777777;
+    box-shadow: 0 15px 0 rgba(0, 0, 0, 0.25);
+    margin-left: 28px;
+    width: 220px;
+    height: 150px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.state_machine_state {
+    background: black;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 45pt;
+    display: flex;
+    padding-left: 50px;
+    justify-content:center;
+    align-content:center;
+    flex-direction:column;
+    color: lawngreen;
+    width: 100px;
+    height: 100px;
+}
+
+.gear_box {
+    margin-left: -28px;
+    z-index: -15;
+}
+
+.gear {
+    width: 64px;
+    height: 64px;
+    animation: turn 5s linear infinite;
+}
+
+@keyframes turn {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }

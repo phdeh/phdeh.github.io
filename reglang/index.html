@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&amp;subset=cyrillic" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P|Roboto+Slab&amp;subset=cyrillic"
+          rel="stylesheet">
     <link href="../style.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
     <script src="js/main.js"></script>
@@ -12,60 +13,98 @@
 </head>
 <body onload="">
 <input id="blur" type="text" style="position: absolute; opacity: 0;">
-<div class="header"><div class="title">Формальная грамматика</div><div class="cite">phdeh.com</div></div>
-<div class="content_block"><div class="content">
-        <div class="author">@ <a target="_blank" href="https://vk.com/im?sel=380497467">Воробьев Д. С.</a>, гр. № 4631, СПбГУАП</div>
-    <div class="exercise" id="work1">
-        <p>
-            Пусть <i>G</i> = (<i>V<sub>T</sub></i>, <i>V<sub>N</sub></i>, <i>P</i>, S), где
-        </p>
-        <p>
-            <i>V<sub>T</sub></i> = {a, b, ..., y, z,
-            λ<sup><span class="tooltip">*<span
-                class="tooltiptext">Пустая строка —<br/>— вводить «/\».</span></span></sup>,
-            ⊥<sup><span class="tooltip">*<span
-                class="tooltiptext">Конец строки —<br/>— вводить «_|_».</span></span></sup>} — множество
-            <u>терминалов</u>,
-        </p>
-        <p>
-            <i>V<sub>N</sub></i> = {A, B, ..., S, ..., Y, Z} — множество <u>нетерминалов</u>,
-        </p>
-        <p>
-            <i>P</i> = {
-        <div id="state"></div>
-        <textarea spellcheck="false" id="production_rules" onkeypress="inputP(event)">
-S → A,
-A → aB,
-B → bA | b⊥</textarea>
-
-        <div id="production_error" class="error" hidden></div>
-        } — множество <u>правил вывода</u>,<sup><span class="tooltip">*<span
-            class="tooltiptext">Набор стрелочки — «->».</span></span><span class="tooltip">*<span
-            class="tooltiptext">На данный момент поддерживается только регулярная грамматика.</span></span></sup>
-        </p>
-        <p>
-            S — <u>аксиома</u>, начальный нетерминал.
-        </p>
-        <div class="button_container">
-            <div id="submit_production" class="button" onclick="analyze();"> Принять</div>
-            <div id="change_production" class="button" onclick="change();" hidden> Изменить</div>
+<div class="header">
+    <div class="title">Формальная грамматика</div>
+    <div class="cite">phdeh.com</div>
+</div>
+<div class="content_block">
+    <div class="content">
+        <div class="author">@ <a target="_blank" href="https://vk.com/im?sel=380497467">Воробьев Д. С.</a>, гр. № 4631,
+            СПбГУАП
         </div>
-    </div>
-    <div id="product_word" class="exercise" hidden>
-        <p>Попробуем вывести какое-либо слово для данной грамматики:</p>
-        <div class="variant">
-            <u>S</u>
-        </div>
-        <div id="production_cases" class="button_container"></div>
-        <div id="make_word_worse">
+        <div class="exercise" id="work1">
             <p>
-                Слово языка получено. Его можно сгенерировать ещё раз, искаверкать вручную и продолжить использовать.
+                Пусть <i>G</i> = (<i>V<sub>T</sub></i>, <i>V<sub>N</sub></i>, <i>P</i>, S), где
+            </p>
+            <p>
+                <i>V<sub>T</sub></i> = {a, b, ..., y, z,
+                λ<sup><span class="tooltip">*<span
+                    class="tooltiptext">Пустая строка —<br/>— вводить «/\».</span></span></sup>,
+                ⊥<sup><span class="tooltip">*<span
+                    class="tooltiptext">Конец строки —<br/>— вводить «_|_».</span></span></sup>} — множество
+                <u>терминалов</u>,
+            </p>
+            <p>
+                <i>V<sub>N</sub></i> = {A, B, ..., S, ..., Y, Z} — множество <u>нетерминалов</u>,
+            </p>
+            <p>
+                <i>P</i> = {
+            <div id="state"></div>
+            <textarea spellcheck="false" id="production_rules" onkeypress="inputP(event)">
+S → sB,
+B → bS | b⊥</textarea>
+
+            <div id="production_error" class="error" hidden></div>
+            } — множество <u>правил вывода</u>,<sup><span class="tooltip">*<span
+                class="tooltiptext">Набор стрелочки — «->».</span></span><span class="tooltip">*<span
+                class="tooltiptext">На данный момент поддерживается только регулярная грамматика.</span></span></sup>
+            </p>
+            <p>
+                S — <u>аксиома</u>, начальный нетерминал.
             </p>
             <div class="button_container">
-                <div class="button" onclick="analyze();"> Ещё раз</div>
-                <div class="button" id="machine_button" onclick="goToStateMachine();"> Продолжить</div>
+                <div id="submit_production" class="button" onclick="analyze();"> Принять</div>
+                <div id="change_production" class="button" onclick="change();" hidden> Изменить</div>
             </div>
         </div>
+        <div id="product_word" class="exercise" hidden>
+            <p>Попробуем вывести какое-либо слово для данной грамматики:</p>
+            <div class="variant">
+                <u>S</u>
+            </div>
+            <div id="production_cases" class="button_container"></div>
+            <div id="make_word_worse">
+                <p>
+                    Слово языка получено. Его можно сгенерировать ещё раз, искаверкать вручную и продолжить
+                    использовать.
+                </p>
+                <div class="button_container">
+                    <div class="button" onclick="analyze();"> Ещё раз</div>
+                    <div class="button" id="machine_button" onclick="goToStateMachine();"> Продолжить</div>
+                </div>
+            </div>
+        </div>
+        <div class="exercise">
+            <p>
+                Язык определён как регулярный с левосторонним выводом. Для него был построен конечный автомат
+                <i>KA</i> = (<i>Q</i>, <i>V<sub>T</sub></i>, δ, H, S), где
+            </p>
+            <p>
+                <i>Q</i> — множество <u>возможных состояний</u> автомата,
+            </p>
+            <p>
+                <i>V<sub>T</sub></i> — множество <u>входных символов</u> автомата,
+            </p>
+            <p>
+                δ — <u>автоматная функция</u>,
+            </p>
+            <p>
+                H — <u>начальное</u> состояние автомата,
+            </p>
+            <p>
+                S — <u>конечное</u> состояние автомата.
+            </p>
+            <div class="state_machine">
+                <div class="gear_box">
+                    <div class="gear">
+                        <img src="gear.svg">
+                    </div>
+                </div>
+
+                <div class="state_machine_state"><p>H</p></div>
+            </div>
+        </div>
+
     </div>
 </div>
 </body>
