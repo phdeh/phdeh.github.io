@@ -225,12 +225,12 @@ function analyze() {
         return;
     }
     for (prod in productionRules) {
-        const prods = isProductable(prod, PRODUCTION_STEPS);
-        if (!prods) {
+        if (!isProductable(prod, PRODUCTION_STEPS)) {
             analyzeError(-1, "Вывод цепочки терминалов из " + prod + " невозможен, либо превышает " + PRODUCTION_STEPS + " шагов.");
             return;
         }
     }
+    alert(detectStateMachine());
     document.getElementById("production_rules").disabled = true;
     var b = document.getElementById("submit_production");
     b.className = "disabled_button";
@@ -375,4 +375,81 @@ function checkWord(evt) {
 
 function goToStateMachine() {
 
+}
+
+const MachineTypes = {
+    NOT_STATED: "Тип автомата не определён",
+    FINITE_LEFT_TO_RIGHT_STATE_MACHINE: "Конечный автомат с разбором слева-направо",
+    FINITE_RIGHT_TO_LEFT_STATE_MACHINE: "Конечный автомат с разбором справа-налево",
+    NOT_SUPPORTED_TYPE: "Неподдерживаемый тип автомата"
+};
+
+var currentStateMachineType = MachineTypes.NOT_STATED;
+
+function detectStateMachine() {
+    var type = MachineTypes.NOT_STATED;
+    for (prod in productionRules) {
+        const pr = productionRules[prod];
+        for (i in pr) {
+            const productionRule = pr[i];
+            if (productionRule.length == 0)
+                return MachineTypes.NOT_SUPPORTED_TYPE;
+            else if (productionRule.length == 1) {
+                if (NON_TERMINAL.indexOf(productionRule.charAt(0)) != -1)
+                    return MachineTypes.NOT_SUPPORTED_TYPE;
+            } else if (productionRule.length == 2) {
+                if (NON_TERMINAL.indexOf(productionRule.charAt(0)) != -1 &&
+                    TERMINAL.indexOf(productionRule.charAt(1)) != -1) {
+                    if (type == MachineTypes.FINITE_LEFT_TO_RIGHT_STATE_MACHINE || type == MachineTypes.NOT_STATED)
+                        type = MachineTypes.FINITE_LEFT_TO_RIGHT_STATE_MACHINE;
+                    else
+                        return MachineTypes.NOT_SUPPORTED_TYPE;
+                } else if (TERMINAL.indexOf(productionRule.charAt(0)) != -1 &&
+                    NON_TERMINAL.indexOf(productionRule.charAt(1)) != -1) {
+                    if (type == MachineTypes.FINITE_RIGHT_TO_LEFT_STATE_MACHINE || type == MachineTypes.NOT_STATED)
+                        type = MachineTypes.FINITE_RIGHT_TO_LEFT_STATE_MACHINE;
+                    else
+                        return MachineTypes.NOT_SUPPORTED_TYPE;
+                } else
+                    return MachineTypes.NOT_SUPPORTED_TYPE;
+            } else
+                return MachineTypes.NOT_SUPPORTED_TYPE;
+        }
+    }
+    currentStateMachineType = MachineTypes.NOT_STATED;
+    buildStateMachine();
+    return type;
+}
+
+function buildStateMachine() {
+    switch (currentStateMachineType) {
+        case MachineTypes.FINITE_LEFT_TO_RIGHT_STATE_MACHINE:
+        {
+            buildLeftToRightStateMachine();
+            break;
+        }
+    }
+}
+
+function findOutFiniteStates() {
+    var stateTransitionFunction = '';
+    var states = {};
+    var state = 'H';
+    alert('DSFDfsdf')
+    var stateTransitions = {};
+    for (prod in productionRules) {
+        const pr = productionRules[prod];
+        for (i in pr) {
+            const productionRule = pr[i];
+            if ((productionRule.length == 1) && (TERMINAL.indexOf(productionRule.charAt(0)) != -1)) {
+                stateTransitions[productionRule.charAt(0)] = prod;
+                stateTransitionFunction = stateTransitionFunction + "H —[" + productionRule.charAt(0) + "]→ " + prod;
+            }
+        }
+    }
+    alert(stateTransitionFunction);
+}
+
+function buildLeftToRightStateMachine() {
+    findOutFiniteStates();
 }

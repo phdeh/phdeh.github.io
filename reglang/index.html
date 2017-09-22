@@ -42,8 +42,10 @@
                 <i>P</i> = {
             <div id="state"></div>
             <textarea spellcheck="false" id="production_rules" onkeypress="inputP(event)">
-S → sB,
-B → bS | b⊥</textarea>
+S → A⊥,
+A → Ba | Ca,
+B → Ab | b,
+C → Ac | c</textarea>
 
             <div id="production_error" class="error" hidden></div>
             } — множество <u>правил вывода</u>,<sup><span class="tooltip">*<span
@@ -75,9 +77,9 @@ B → bS | b⊥</textarea>
                 </div>
             </div>
         </div>
-        <div class="exercise">
+        <div id="finite_state_machine_ex" class="exercise" hidden>
             <p>
-                Язык определён как регулярный с левосторонним выводом. Для него был построен конечный автомат
+                Для него был построен конечный автомат
                 <i>KA</i> = (<i>Q</i>, <i>V<sub>T</sub></i>, δ, H, S), где
             </p>
             <p>
@@ -87,7 +89,13 @@ B → bS | b⊥</textarea>
                 <i>V<sub>T</sub></i> — множество <u>входных символов</u> автомата,
             </p>
             <p>
-                δ — <u>автоматная функция</u>,
+                δ = {
+            </p>
+            <div id="machine_function">
+
+            </div>
+            <p>
+               } — <u>автоматная функция</u>,
             </p>
             <p>
                 H — <u>начальное</u> состояние автомата,
