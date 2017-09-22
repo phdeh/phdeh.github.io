@@ -42,10 +42,9 @@
                 <i>P</i> = {
             <div id="state"></div>
             <textarea spellcheck="false" id="production_rules" onkeypress="inputP(event)">
-S → A⊥,
-A → Ba | Ca,
-B → Ab | b,
-C → Ac | c</textarea>
+S → C⊥,
+A → Cc,
+C → Aa | a</textarea>
 
             <div id="production_error" class="error" hidden></div>
             } — множество <u>правил вывода</u>,<sup><span class="tooltip">*<span
@@ -72,8 +71,9 @@ C → Ac | c</textarea>
                     использовать.
                 </p>
                 <div class="button_container">
-                    <div class="button" onclick="analyze();"> Ещё раз</div>
+                    <div class="button" id="try_again" onclick="analyze();"> Ещё раз</div>
                     <div class="button" id="machine_button" onclick="goToStateMachine();"> Продолжить</div>
+                    <div class="button" id="change_word" hidden> Изменить</div>
                 </div>
             </div>
         </div>
@@ -109,7 +109,6 @@ C → Ac | c</textarea>
                         <img src="gear.svg">
                     </div>
                 </div>
-
                 <div class="state_machine_state"><p>H</p></div>
             </div>
         </div>

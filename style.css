@@ -129,7 +129,7 @@ textarea:disabled {
     font-size: 24pt;
     color: white;
     cursor: pointer;
-    min-width: 200px;
+    min-width: 220px;
     max-width: calc(100% - 25px);
     padding-left: 10px;
     padding-right: 10px;
@@ -150,7 +150,7 @@ textarea:disabled {
     font-size: 24pt;
     color: white;
     cursor: default;
-    min-width: 200px;
+    min-width: 220px;
     max-width: calc(100% - 25px);
     padding-left: 10px;
     padding-right: 10px;

@@ -230,7 +230,8 @@ function analyze() {
             return;
         }
     }
-    alert(detectStateMachine());
+    const type = detectStateMachine();
+    buildStateMachine(type);
     document.getElementById("production_rules").disabled = true;
     var b = document.getElementById("submit_production");
     b.className = "disabled_button";
@@ -293,12 +294,11 @@ function findWordProductions() {
             return;
         }
     }
-    document.getElementsByClassName("variant")[0].innerHTML = "<input spellcheck='false' value='" +
+    document.getElementsByClassName("variant")[0].innerHTML = "<input id='input_word_box' spellcheck='false' value='" +
         makeWord + "' onkeypress='inputP(event); checkWord(event);'>";
     document.getElementById("production_cases").innerHTML = "";
     const makeWorse = document.getElementById("make_word_worse");
     makeWorse.hidden = false;
-    makeWorse.scrollIntoView(true);
 }
 
 function replaceProduction(replacement) {
@@ -374,7 +374,16 @@ function checkWord(evt) {
 }
 
 function goToStateMachine() {
-
+    var o = document.getElementById("finite_state_machine_ex");
+    o.hidden = false;
+    o.scrollIntoView(true);
+    o = document.getElementById("try_again");
+    o.className = 'disabled_button';
+    o.onclick = null;
+    o = document.getElementById("machine_button");
+    o.className = 'disabled_button';
+    o.onclick = null;
+    document.getElementById('input_word_box').disabled = true;
 }
 
 const MachineTypes = {
@@ -383,8 +392,6 @@ const MachineTypes = {
     FINITE_RIGHT_TO_LEFT_STATE_MACHINE: "Конечный автомат с разбором справа-налево",
     NOT_SUPPORTED_TYPE: "Неподдерживаемый тип автомата"
 };
-
-var currentStateMachineType = MachineTypes.NOT_STATED;
 
 function detectStateMachine() {
     var type = MachineTypes.NOT_STATED;
@@ -416,26 +423,25 @@ function detectStateMachine() {
                 return MachineTypes.NOT_SUPPORTED_TYPE;
         }
     }
-    currentStateMachineType = MachineTypes.NOT_STATED;
-    buildStateMachine();
     return type;
 }
 
-function buildStateMachine() {
+function buildStateMachine(currentStateMachineType) {
     switch (currentStateMachineType) {
-        case MachineTypes.FINITE_LEFT_TO_RIGHT_STATE_MACHINE:
-        {
+        case MachineTypes.FINITE_LEFT_TO_RIGHT_STATE_MACHINE: {
             buildLeftToRightStateMachine();
             break;
+        }
+        default: {
+            alert(currentStateMachineType);
         }
     }
 }
 
 function findOutFiniteStates() {
     var stateTransitionFunction = '';
+    var firstOne = true;
     var states = {};
-    var state = 'H';
-    alert('DSFDfsdf')
     var stateTransitions = {};
     for (prod in productionRules) {
         const pr = productionRules[prod];
@@ -443,11 +449,48 @@ function findOutFiniteStates() {
             const productionRule = pr[i];
             if ((productionRule.length == 1) && (TERMINAL.indexOf(productionRule.charAt(0)) != -1)) {
                 stateTransitions[productionRule.charAt(0)] = prod;
-                stateTransitionFunction = stateTransitionFunction + "H —[" + productionRule.charAt(0) + "]→ " + prod;
+                if (firstOne)
+                    firstOne = false;
+                else
+                    stateTransitionFunction += ", <br/>\n";
+                stateTransitionFunction = stateTransitionFunction +
+                    "H →<sub class=\"undertext\">" + productionRule.charAt(0) + "</sub> " + prod
             }
         }
     }
-    alert(stateTransitionFunction);
+    states['H'] = stateTransitions;
+    for (fromTo in productionRules) {
+        stateTransitions = {};
+        for (prod in productionRules) {
+            const pr = productionRules[prod];
+            for (i in pr) {
+                const productionRule = pr[i];
+                if ((productionRule.length == 2)
+                    && (TERMINAL.indexOf(productionRule.charAt(0)) != -1)
+                    && productionRule.charAt(1) == fromTo) {
+                    if (firstOne)
+                        firstOne = false;
+                    else
+                        stateTransitionFunction += ", <br/>\n";
+                    stateTransitions[productionRule.charAt(0)] = prod;
+                    stateTransitionFunction += fromTo +
+                        " →<sub class=\"undertext\">" + productionRule.charAt(0) + "</sub> " + prod
+                } else if ((productionRule.length == 2)
+                    && (TERMINAL.indexOf(productionRule.charAt(1)) != -1)
+                    && productionRule.charAt(0) == fromTo) {
+                    if (firstOne)
+                        firstOne = false;
+                    else
+                        stateTransitionFunction += ", <br/>\n";
+                    stateTransitions[productionRule.charAt(0)] = prod;
+                    stateTransitionFunction += fromTo +
+                        " →<sub class=\"undertext\">" + productionRule.charAt(1) + "</sub> " + prod
+                }
+            }
+        }
+        states[fromTo] = stateTransitions;
+    }
+    document.getElementById("machine_function").innerHTML = stateTransitionFunction;
 }
 
 function buildLeftToRightStateMachine() {
