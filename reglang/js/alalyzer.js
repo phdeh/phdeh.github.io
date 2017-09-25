@@ -1,5 +1,6 @@
 const replacementsForP = {
     "/\\": "λ",
+    "\\|/": "ε",
     "_|_": "⊥",
     "->": "→"
 };
@@ -48,6 +49,33 @@ function inputP(evt) {
             }
         }
     }
+}
+
+function filledSet(fillFrom, addition) {
+    var set = addition;
+    var elem = document.getElementById(fillFrom + "_set");
+    var from = elem.value;
+    var comma = false;
+    for (i in from) {
+        const c = from[i];
+        if (c == ' ' || c == '\n' || c == '\r' || c == '\t')
+            continue;
+        else if (comma) {
+            if (c != ',') {
+                setCaretToChar(elem, i);
+                var error = document.getElementById(fillFrom + "_error");
+                error.innerHTML = "Символы должны быть разделены запятыми.";
+                error.hidden = false;
+                throw "Symbols should be separated";
+            } else {
+                comma = false;
+            }
+        } else {
+            comma = true;
+            set.push(c);
+        }
+    }
+    return set;
 }
 
 function getCaret(node) {
@@ -108,7 +136,7 @@ const ANALYZER_STATE = {
     H: "H"
 };
 
-const NON_TERMINAL = [
+var NON_TERMINAL = [
     'A', 'B', 'C', 'D', 'E',
     'F', 'G', /**/ 'I', 'J',
     'K', 'L', 'M', 'N', 'O',
@@ -117,7 +145,7 @@ const NON_TERMINAL = [
     'Z'
 ];
 
-const TERMINAL = [
+var TERMINAL = [
     'a', 'b', 'c', 'd', 'e',
     'f', 'g', 'h', 'i', 'j',
     'k', 'l', 'm', 'n', 'o',
@@ -125,6 +153,8 @@ const TERMINAL = [
     'u', 'v', 'w', 'x', 'y',
     'z', 'λ', '⊥'
 ];
+
+var axiom = 'S';
 
 const PRODUCTION_SIGN = '→';
 
@@ -137,8 +167,14 @@ const LAST_SYMBOL = '\0';
 var productionRules;
 
 function analyze() {
+    document.getElementById("terminal_error").hidden = true;
+    document.getElementById("non_terminal_error").hidden = true;
     document.getElementById("production_error").hidden = true;
+    document.getElementById("axiom_error").hidden = true;
     document.getElementById("make_word_worse").hidden = true;
+    TERMINAL = filledSet("terminal", ['λ', 'ε']);
+    NON_TERMINAL = filledSet("non_terminal", []);
+    axiom = document.getElementById("axiom").value;
     var pr = {};
     var state = ANALYZER_STATE.S;
     var currNonterminal = '';
@@ -220,8 +256,26 @@ function analyze() {
         }
     }
     productionRules = pr;
-    if (!("S" in productionRules)) {
-        analyzeError(-1, "В правилах продукции не задано правил для S.");
+    {
+        var a = document.getElementById("axiom_error");
+        if (axiom.length > 1) {
+            a.innerHTML = "Аксиома должна быть только <u>одним</u> нетерминалом.";
+            a.hidden = false;
+            return;
+        }
+        else if (axiom.length == 0) {
+            a.innerHTML = "Поле для аксиомы не может быть пустым.";
+            a.hidden = false;
+            return;
+        } else if (NON_TERMINAL.indexOf(axiom) == -1) {
+
+                a.innerHTML = "Аксиома должна быть <u>нетерминалом</u>.";
+                a.hidden = false;
+return;
+        }
+    }
+    if (!(axiom in productionRules)) {
+        analyzeError(-1, "В правилах продукции не задано правил для " + axiom + ".");
         return;
     }
     for (prod in productionRules) {
@@ -238,7 +292,7 @@ function analyze() {
     b.innerHTML = "Принято";
     document.getElementById("product_word").hidden = false;
     b.onclick = null;
-    makeWord = 'S';
+    makeWord = axiom;
     document.getElementById("change_production").hidden = false;
     findWordProductions();
     var element = document.getElementById("production_cases");
@@ -247,7 +301,7 @@ function analyze() {
 
 function analyzeError(index, message) {
     if (index != -1) setCaretToChar(document.getElementById("production_rules"), index);
-    var v = document.getElementsByClassName("error")[0];
+    var v = document.getElementById("production_error");
     v.innerHTML = message;
     v.hidden = false;
 }
@@ -288,7 +342,7 @@ function findWordProductions() {
             pc.innerHTML = '';
             for (j in pr) {
                 var a = (makeWord.substring(0, i) + pr[j] +
-                    makeWord.substring(i - -1, makeWord.length)).replace('λ', '');
+                    makeWord.substring(i - -1, makeWord.length)).replace(RegExp('[λε]'), '');
                 pc.innerHTML += '<div class="button" onclick="replaceProduction(\'' + a + '\')"> ' + c + ' → ' + pr[j] + ' </div>';
             }
             return;
@@ -405,14 +459,14 @@ function detectStateMachine() {
                 if (NON_TERMINAL.indexOf(productionRule.charAt(0)) != -1)
                     return MachineTypes.NOT_SUPPORTED_TYPE;
             } else if (productionRule.length == 2) {
-                if (NON_TERMINAL.indexOf(productionRule.charAt(0)) != -1 &&
-                    TERMINAL.indexOf(productionRule.charAt(1)) != -1) {
+                if (NON_TERMINAL.indexOf(productionRule.charAt(1)) != -1 &&
+                    TERMINAL.indexOf(productionRule.charAt(0)) != -1) {
                     if (type == MachineTypes.FINITE_LEFT_TO_RIGHT_STATE_MACHINE || type == MachineTypes.NOT_STATED)
                         type = MachineTypes.FINITE_LEFT_TO_RIGHT_STATE_MACHINE;
                     else
                         return MachineTypes.NOT_SUPPORTED_TYPE;
-                } else if (TERMINAL.indexOf(productionRule.charAt(0)) != -1 &&
-                    NON_TERMINAL.indexOf(productionRule.charAt(1)) != -1) {
+                } else if (TERMINAL.indexOf(productionRule.charAt(1)) != -1 &&
+                    NON_TERMINAL.indexOf(productionRule.charAt(0)) != -1) {
                     if (type == MachineTypes.FINITE_RIGHT_TO_LEFT_STATE_MACHINE || type == MachineTypes.NOT_STATED)
                         type = MachineTypes.FINITE_RIGHT_TO_LEFT_STATE_MACHINE;
                     else
@@ -454,7 +508,7 @@ function findOutFiniteStates() {
                 else
                     stateTransitionFunction += ", <br/>\n";
                 stateTransitionFunction = stateTransitionFunction +
-                    "H →<sub class=\"undertext\">" + productionRule.charAt(0) + "</sub> " + prod
+                    "δ(" + productionRule.charAt(0) + ", H) = " + prod
             }
         }
     }
@@ -473,8 +527,8 @@ function findOutFiniteStates() {
                     else
                         stateTransitionFunction += ", <br/>\n";
                     stateTransitions[productionRule.charAt(0)] = prod;
-                    stateTransitionFunction += fromTo +
-                        " →<sub class=\"undertext\">" + productionRule.charAt(0) + "</sub> " + prod
+                    stateTransitionFunction += "δ(" + productionRule.charAt(0) + ", " + fromTo +
+                        ") = " + prod
                 } else if ((productionRule.length == 2)
                     && (TERMINAL.indexOf(productionRule.charAt(1)) != -1)
                     && productionRule.charAt(0) == fromTo) {
@@ -483,8 +537,8 @@ function findOutFiniteStates() {
                     else
                         stateTransitionFunction += ", <br/>\n";
                     stateTransitions[productionRule.charAt(0)] = prod;
-                    stateTransitionFunction += fromTo +
-                        " →<sub class=\"undertext\">" + productionRule.charAt(1) + "</sub> " + prod
+                    stateTransitionFunction += "δ(" + productionRule.charAt(1) + ", " + fromTo +
+                        ") = " + prod
                 }
             }
         }

@@ -14,8 +14,9 @@ input {
     float: right;
     display: table-cell;
     width: 150px;
-    padding: 0 20px 20px 0;
+    padding: 0 9px 1px 9px;
     font-size: 18pt;
+    height: 25pt;
     font-family: 'Roboto Slab', serif;
     border: solid black 3px;
     -moz-appearance: textfield;
@@ -68,9 +69,9 @@ a {
 
 textarea {
     resize: vertical;
-    width: calc(100% - 25px);
-    height: 200px;
-    padding: 0 20px 20px 0;
+    width: calc(100% - 33px);
+    height: 85px;
+    padding: 0px 20px 20px 8px;
     font-size: 18pt;
     font-family: 'Roboto Slab', serif;
     border: solid black 3px;

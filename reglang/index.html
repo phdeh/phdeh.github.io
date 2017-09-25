@@ -28,23 +28,30 @@
                 Пусть <i>G</i> = (<i>V<sub>T</sub></i>, <i>V<sub>N</sub></i>, <i>P</i>, S), где
             </p>
             <p>
-                <i>V<sub>T</sub></i> = {a, b, ..., y, z,
-                λ<sup><span class="tooltip">*<span
-                    class="tooltiptext">Пустая строка —<br/>— вводить «/\».</span></span></sup>,
-                ⊥<sup><span class="tooltip">*<span
-                    class="tooltiptext">Конец строки —<br/>— вводить «_|_».</span></span></sup>} — множество
-                <u>терминалов</u>,
+                <i>V<sub>T</sub></i> = {
+            <div></div>
+            <textarea spellcheck="false" style="height: 12pt;" id="terminal_set" onkeypress="inputP(event)">
+0, 1, ~, #, &</textarea>
+
+            <div id="terminal_error" class="error" hidden></div>
+            } — множество
+            <u>терминалов</u>,
             </p>
             <p>
-                <i>V<sub>N</sub></i> = {A, B, ..., S, ..., Y, Z} — множество <u>нетерминалов</u>,
-            </p>
+                <i>V<sub>N</sub></i> = {
+            <div></div>
+            <textarea spellcheck="false" style="height: 12pt;" id="non_terminal_set" onkeypress="inputP(event)">
+X, Y, Z, W, V</textarea>
+            <div id="non_terminal_error" class="error" hidden></div>
+            } — множество
+            <u>нетерминалов</u>,</p>
             <p>
                 <i>P</i> = {
-            <div id="state"></div>
+            <div></div>
             <textarea spellcheck="false" id="production_rules" onkeypress="inputP(event)">
-S → C⊥,
-A → Cc,
-C → Aa | a</textarea>
+X → 0Y | 1Z | ε,           Y → 0Z | ~W | #,
+Z → 1Y | 1W | 0V,        W → 0W | 1W | #,
+V → &Z</textarea>
 
             <div id="production_error" class="error" hidden></div>
             } — множество <u>правил вывода</u>,<sup><span class="tooltip">*<span
@@ -52,7 +59,8 @@ C → Aa | a</textarea>
                 class="tooltiptext">На данный момент поддерживается только регулярная грамматика.</span></span></sup>
             </p>
             <p>
-                S — <u>аксиома</u>, начальный нетерминал.
+                <input id="axiom" value="X"> — <u>аксиома</u>, начальный нетерминал.
+            <div id="axiom_error" class="error" hidden></div>
             </p>
             <div class="button_container">
                 <div id="submit_production" class="button" onclick="analyze();"> Принять</div>
@@ -80,22 +88,19 @@ C → Aa | a</textarea>
         <div id="finite_state_machine_ex" class="exercise" hidden>
             <p>
                 Для него был построен конечный автомат
-                <i>KA</i> = (<i>Q</i>, <i>V<sub>T</sub></i>, δ, H, S), где
+                <i>M</i> = (<i>Q</i>, <i>V<sub>T</sub></i>, δ, H, S), где
             </p>
             <p>
                 <i>Q</i> — множество <u>возможных состояний</u> автомата,
             </p>
             <p>
-                <i>V<sub>T</sub></i> — множество <u>входных символов</u> автомата,
-            </p>
-            <p>
-                δ = {
+                Σ — множество <u>терминалов</u> автомата,
             </p>
             <div id="machine_function">
 
             </div>
             <p>
-               } — <u>автоматная функция</u>,
+                — <u>автоматная функция</u>,
             </p>
             <p>
                 H — <u>начальное</u> состояние автомата,

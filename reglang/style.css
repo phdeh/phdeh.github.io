@@ -66,6 +66,10 @@
     z-index: -15;
 }
 
+input {
+    float: none;
+}
+
 .gear {
     width: 64px;
     height: 64px;
