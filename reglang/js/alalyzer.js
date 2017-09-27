@@ -294,7 +294,7 @@ function analyze() {
         }
     }
     const type = detectStateMachine();
-    buildStateMachine(type);
+    CURRENT_STATE_MACHINE_TYPE = type;
     document.getElementById("production_rules").disabled = true;
     var b = document.getElementById("submit_production");
     b.className = "disabled_button";
@@ -447,6 +447,7 @@ function goToStateMachine() {
     o.className = 'disabled_button';
     o.onclick = null;
     document.getElementById('input_word_box').disabled = true;
+    buildStateMachine(CURRENT_STATE_MACHINE_TYPE);
 }
 
 const MachineTypes = {
@@ -468,14 +469,14 @@ function detectStateMachine() {
                 if (NON_TERMINAL.indexOf(productionRule.charAt(0)) != -1)
                     return MachineTypes.NOT_SUPPORTED_TYPE;
             } else if (productionRule.length == 2) {
-                if (NON_TERMINAL.indexOf(productionRule.charAt(1)) != -1 &&
-                    TERMINAL.indexOf(productionRule.charAt(0)) != -1) {
+                if (NON_TERMINAL.indexOf(productionRule.charAt(0)) != -1 &&
+                    TERMINAL.indexOf(productionRule.charAt(1)) != -1) {
                     if (type == MachineTypes.FINITE_LEFT_TO_RIGHT_STATE_MACHINE || type == MachineTypes.NOT_STATED)
                         type = MachineTypes.FINITE_LEFT_TO_RIGHT_STATE_MACHINE;
                     else
                         return MachineTypes.NOT_SUPPORTED_TYPE;
-                } else if (TERMINAL.indexOf(productionRule.charAt(1)) != -1 &&
-                    NON_TERMINAL.indexOf(productionRule.charAt(0)) != -1) {
+                } else if (TERMINAL.indexOf(productionRule.charAt(0)) != -1 &&
+                    NON_TERMINAL.indexOf(productionRule.charAt(1)) != -1) {
                     if (type == MachineTypes.FINITE_RIGHT_TO_LEFT_STATE_MACHINE || type == MachineTypes.NOT_STATED)
                         type = MachineTypes.FINITE_RIGHT_TO_LEFT_STATE_MACHINE;
                     else
@@ -490,13 +491,18 @@ function detectStateMachine() {
 }
 
 function buildStateMachine(currentStateMachineType) {
+    LEXING_WORD = makeWord;
     switch (currentStateMachineType) {
         case MachineTypes.FINITE_LEFT_TO_RIGHT_STATE_MACHINE: {
             buildLeftToRightStateMachine();
             break;
         }
+        case MachineTypes.FINITE_RIGHT_TO_LEFT_STATE_MACHINE: {
+            buildRightToLeftStateMachine();
+            break;
+        }
         default: {
-            alert(currentStateMachineType);
+            alert(currentStateMachineType + " не поддерживается");
         }
     }
 }
@@ -553,37 +559,97 @@ function findOutFiniteStates() {
         }
         states[fromTo] = stateTransitions;
     }
+    states['?'] = [];
     STATES = states;
-    document.getElementById("machine_function").innerHTML = printStateTable();
+    CURRENT_STATE = 'H';
+    document.getElementById("machine_function").innerHTML = stateTransitionFunction;
+    document.getElementById("fin").innerHTML = axiom;
 }
+
+var CURRENT_STATE_MACHINE_TYPE;
 
 var STATES;
 
+var CURRENT_STATE;
+
+var LEXING_WORD;
+
+var LEXING_CARET;
+
 function buildLeftToRightStateMachine() {
     findOutFiniteStates();
+    LEXING_CARET = 0;
+    showState();
 }
 
-function printStateTable() {
+function buildRightToLeftStateMachine() {
+    findOutFiniteStates();
+    LEXING_CARET = LEXING_WORD.length - 1;
+    showState();
+}
+
+function printStateTable(curstate, cursymbol) {
     var str = ["<table width='100%' border='3'><tr><td class='lined'><div class='sigma'>Σ</div><div class='q'><i>Q</i></div></td>"];
     for (i in TERMINAL) {
-        str.push("<td class='header_vector'>", TERMINAL[i], "</td>");
+        str.push("<td class='", (TERMINAL[i] != cursymbol ? "header_vector" : "selected_vector"), "'>", TERMINAL[i], "</td>");
     }
     str.push("</tr>");
     for (s in STATES) {
-        str.push("<tr><td  class='main_vector'>", s, "</td>");
+        str.push("<tr><td  class='", (s != curstate ? "main_vector" : "selected_vector"), "'>", s, "</td>");
         var state = STATES[s];
         for (i in TERMINAL) {
             if (state[TERMINAL[i]] != null)
-                str.push("<td>", state[TERMINAL[i]], "</td>");
+                str.push("<td", (s == curstate && TERMINAL[i] == cursymbol ? " class='choosen_vector'" : (s == curstate ||
+                TERMINAL[i] == cursymbol ? " class='highlighted_vector'" : "")), ">", state[TERMINAL[i]], "</td>");
             else
-                str.push("<td>?</td>");
+                str.push("<td", (s == curstate && TERMINAL[i] == cursymbol ? " class='choosen_vector'" : (s == curstate ||
+                TERMINAL[i] == cursymbol ? " class='highlighted_vector'" : "")), ">?</td>");
         }
         str.push("</tr>");
     }
-    str.push("<tr><td class='main_vector'>?</td>");
-    for (i in TERMINAL) {
-        str.push("<td>?</td>");
-    }
     str.push("</tr></table>");
     return str.join("");
+}
+
+function showState() {
+    var cursymbol;
+    if (LEXING_CARET >= 0 && LEXING_CARET < LEXING_WORD.length) {
+        cursymbol = LEXING_WORD.charAt(LEXING_CARET);
+        var i = LEXING_CARET;
+        var w = LEXING_WORD.substring(0, i) + "<div class='ul'>" +
+            LEXING_WORD.substring(i, i - -1) + "</div>" +
+            LEXING_WORD.substring(i - -1, LEXING_WORD.length);
+        document.getElementById("lexing_word").innerHTML = w;
+    } else {
+        cursymbol = 'ε';
+        document.getElementById("lexing_word").innerHTML = LEXING_WORD;
+    }
+    document.getElementById("machine_state").textContent = CURRENT_STATE;
+    document.getElementById("machine_table").innerHTML = printStateTable(CURRENT_STATE, cursymbol);
+}
+
+function spinMachine() {
+    var cursymbol;
+    if (LEXING_CARET >= 0 && LEXING_CARET < LEXING_WORD.length) {
+        cursymbol = LEXING_WORD.charAt(LEXING_CARET);
+    } else {
+        cursymbol = 'ε';
+    }
+    CURRENT_STATE = STATES[CURRENT_STATE][cursymbol];
+    if (CURRENT_STATE == null)
+        CURRENT_STATE = '?';
+    switch (CURRENT_STATE_MACHINE_TYPE) {
+        case MachineTypes.FINITE_LEFT_TO_RIGHT_STATE_MACHINE: {
+            LEXING_CARET++;
+            break;
+        }
+        case MachineTypes.FINITE_RIGHT_TO_LEFT_STATE_MACHINE: {
+            LEXING_CARET--;
+            break;
+        }
+        default: {
+            alert(currentStateMachineType + " не поддерживается");
+        }
+    }
+    showState();
 }

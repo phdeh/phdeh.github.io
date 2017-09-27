@@ -98,21 +98,29 @@ V → &Z</textarea>
 
             </div>
             <p>
-                — <u>автоматная функция</u>,
+                δ — <u>автоматная функция</u>,
             </p>
             <p>
                 H — <u>начальное</u> состояние автомата,
             </p>
             <p>
-                S — <u>конечное</u> состояние автомата.
+                <i>F</i> = {<span id="fin"></span>} — множество <u>конечных</u> состояний автомата.
             </p>
+            <div id="machine_table" style="margin-bottom: 15px">
+
+            </div>
+            <div class="variant" id="lexing_word">
+            </div>
+            <div class="button_container">
             <div class="state_machine">
                 <div class="gear_box">
                     <div class="gear">
                         <img src="gear.svg">
                     </div>
                 </div>
-                <div class="state_machine_state"><p>H</p></div>
+                <div class="state_machine_state" id="machine_state">H</div>
+            </div>
+                <div class="button" id="spin_machine" onclick="spinMachine();"> Вращать</div>
             </div>
         </div>
 

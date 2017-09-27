@@ -37,7 +37,6 @@
 .state_machine {
     background: #777777;
     box-shadow: 0 15px 0 rgba(0, 0, 0, 0.25);
-    margin-left: 28px;
     width: 220px;
     height: 150px;
     display: flex;
@@ -55,8 +54,8 @@
     justify-content: center;
     align-content: center;
     flex-direction: column;
-    color: lawngreen;
-    text-shadow: 0 5.5pt 0 green;
+    color: #DD0000;
+    text-shadow: 0 5.5pt 0 #990000;
     width: 100px;
     height: 100px;
 }
@@ -129,4 +128,23 @@ td, th {
 .header_vector {
     background: #D9D9D9;
     font-weight: bold;
+}
+
+.selected_vector {
+    background: #DD0000;
+    color: white;
+    text-shadow: 0px 3px 0px black;
+    font-weight: bold;
+}
+
+.highlighted_vector {
+     background: #FFF3F3;
+ }
+
+.choosen_vector {
+    font-weight: bold;
+    background: #FFE0E0;
+    text-decoration: underline;
+    text-decoration-color: #DD0000;
+    -webkit-text-decoration-color: #DD0000;
 }
