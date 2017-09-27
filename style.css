@@ -70,7 +70,7 @@ a {
 textarea {
     resize: vertical;
     width: calc(100% - 33px);
-    height: 85px;
+    height: 150px;
     padding: 0px 20px 20px 8px;
     font-size: 18pt;
     font-family: 'Roboto Slab', serif;

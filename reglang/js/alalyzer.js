@@ -515,24 +515,33 @@ function findOutFiniteStates() {
     for (prod in productionRules) {
         const pr = productionRules[prod];
         for (i in pr) {
+            var undetermined = false;
             const productionRule = pr[i];
             if ((productionRule.length == 1) && (TERMINAL.indexOf(productionRule.charAt(0)) != -1)) {
-                stateTransitions[productionRule.charAt(0)] = prod;
                 if (firstOne)
                     firstOne = false;
                 else
-                    stateTransitionFunction += ", <br/>\n";
+                    stateTransitionFunction += ", ";
+                if (stateTransitions[productionRule.charAt(0)] != null)
+                    undetermined = true;
+                stateTransitions[productionRule.charAt(0)] = prod;
+                if (undetermined)
+                    stateTransitionFunction += "<b style='color: red'>";
                 stateTransitionFunction = stateTransitionFunction +
                     "δ(" + productionRule.charAt(0) + ", H) = " + prod
+                if (undetermined)
+                    stateTransitionFunction += "</b>";
             }
         }
     }
     states['H'] = stateTransitions;
+    var wasUndetermined = false;
     for (fromTo in productionRules) {
         stateTransitions = {};
         for (prod in productionRules) {
             const pr = productionRules[prod];
             for (i in pr) {
+                var undetermined = false;
                 const productionRule = pr[i];
                 if ((productionRule.length == 2)
                     && (TERMINAL.indexOf(productionRule.charAt(0)) != -1)
@@ -540,21 +549,35 @@ function findOutFiniteStates() {
                     if (firstOne)
                         firstOne = false;
                     else
-                        stateTransitionFunction += ", <br/>\n";
+                        stateTransitionFunction += ", ";
+                    if (stateTransitions[productionRule.charAt(0)] != null)
+                        undetermined = true;
+                    if (undetermined)
+                        stateTransitionFunction += "<b style='color: red'>";
                     stateTransitions[productionRule.charAt(0)] = prod;
                     stateTransitionFunction += "δ(" + productionRule.charAt(0) + ", " + fromTo +
-                        ") = " + prod
+                        ") = " + prod;
+                    if (undetermined)
+                        stateTransitionFunction += "</b>";
                 } else if ((productionRule.length == 2)
                     && (TERMINAL.indexOf(productionRule.charAt(1)) != -1)
                     && productionRule.charAt(0) == fromTo) {
                     if (firstOne)
                         firstOne = false;
                     else
-                        stateTransitionFunction += ", <br/>\n";
-                    stateTransitions[productionRule.charAt(0)] = prod;
+                        stateTransitionFunction += ", ";
+                    if (stateTransitions[productionRule.charAt(1)] != null)
+                        undetermined = true;
+                    if (undetermined)
+                        stateTransitionFunction += "<span style='color: red'>";
+                    stateTransitions[productionRule.charAt(1)] = prod;
                     stateTransitionFunction += "δ(" + productionRule.charAt(1) + ", " + fromTo +
-                        ") = " + prod
+                        ") = " + prod;
+                    if (undetermined)
+                        stateTransitionFunction += "</span>";
                 }
+
+                wasUndetermined |= undetermined;
             }
         }
         states[fromTo] = stateTransitions;
@@ -562,7 +585,7 @@ function findOutFiniteStates() {
     states['?'] = [];
     STATES = states;
     CURRENT_STATE = 'H';
-    document.getElementById("machine_function").innerHTML = stateTransitionFunction;
+    document.getElementById("machine_function").innerHTML = stateTransitionFunction + ".";
     document.getElementById("fin").innerHTML = axiom;
 }
 
@@ -610,6 +633,12 @@ function printStateTable(curstate, cursymbol) {
     str.push("</tr></table>");
     return str.join("");
 }
+
+/*
+X → Y0 | Z1 | ε,       Y → Z0 | W~ | #,
+Z → Y1 | W1 | V0,    W → W0 | W1 | #,
+V → Z&
+ */
 
 function showState() {
     var cursymbol;

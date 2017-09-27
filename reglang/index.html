@@ -49,15 +49,17 @@ X, Y, Z, W, V</textarea>
                 <i>P</i> = {
             <div></div>
             <textarea spellcheck="false" id="production_rules" onkeypress="inputP(event)">
-X → 0Y | 1Z | ε,       Y → 0Z | ~W | #,
-Z → 1Y | 1W | 0V,    W → 0W | 1W | #,
+X → 0Y | 1Z | ε,
+Y → 0Z | ~W | #,
+Z → 1Y | 1W | 0V,
+W → 0W | 1W | #,
 V → &Z</textarea>
 
             <div id="production_error" class="error" hidden></div>
             } — множество <u>правил вывода</u>,
             </p>
             <p>
-                <input id="axiom" value="X"> — <u>аксиома</u>, начальный нетерминал.
+                S = <input id="axiom" value="X"> — <u>аксиома</u>, начальный нетерминал.
             <div id="axiom_error" class="error" hidden></div>
             </p>
             <div class="button_container">
@@ -97,6 +99,7 @@ V → &Z</textarea>
             <div id="machine_function">
 
             </div>
+
             <p>
                 δ — <u>автоматная функция</u>,
             </p>
