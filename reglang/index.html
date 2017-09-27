@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="mask-icon" href="phdeh.svg" color="#DD0000">
+    <link rel="mask-icon" href="phdeh.svg" color="red">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P|Roboto+Slab&amp;subset=cyrillic"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P|Roboto+Slab:100,400&amp;subset=cyrillic" rel="stylesheet">
     <link href="../style.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
     <script src="js/main.js"></script>
     <script src="js/alalyzer.js"></script>
     <meta charset="UTF-8">
-    <title>Разбор регулярных языков</title>
+    <title>phdeh.com — Формальная грамматика</title>
 </head>
 <body onload="">
 <input id="blur" type="text" style="position: absolute; opacity: 0;">
@@ -35,7 +34,8 @@
 
             <div id="terminal_error" class="error" hidden></div>
             } — множество
-            <u>терминалов</u>,
+            <u>терминалов</u>,<sup><span class="tooltip">*<span
+                class="tooltiptext">Правила набора:<br><ul><li>«->» — «→»;</li><li>«_|_» — «⊥»;</li><li>«\|/» — «ε»;</li><li>«/\» — «λ».</li></ul></span></span></sup>
             </p>
             <p>
                 <i>V<sub>N</sub></i> = {
@@ -49,14 +49,12 @@ X, Y, Z, W, V</textarea>
                 <i>P</i> = {
             <div></div>
             <textarea spellcheck="false" id="production_rules" onkeypress="inputP(event)">
-X → 0Y | 1Z | ε,           Y → 0Z | ~W | #,
-Z → 1Y | 1W | 0V,        W → 0W | 1W | #,
+X → 0Y | 1Z | ε,       Y → 0Z | ~W | #,
+Z → 1Y | 1W | 0V,    W → 0W | 1W | #,
 V → &Z</textarea>
 
             <div id="production_error" class="error" hidden></div>
-            } — множество <u>правил вывода</u>,<sup><span class="tooltip">*<span
-                class="tooltiptext">Набор стрелочки — «->».</span></span><span class="tooltip">*<span
-                class="tooltiptext">На данный момент поддерживается только регулярная грамматика.</span></span></sup>
+            } — множество <u>правил вывода</u>,
             </p>
             <p>
                 <input id="axiom" value="X"> — <u>аксиома</u>, начальный нетерминал.
@@ -88,7 +86,7 @@ V → &Z</textarea>
         <div id="finite_state_machine_ex" class="exercise" hidden>
             <p>
                 Для него был построен конечный автомат
-                <i>M</i> = (<i>Q</i>, <i>V<sub>T</sub></i>, δ, H, S), где
+                <i>M</i> = (<i>Q</i>, Σ, δ, H, S), где
             </p>
             <p>
                 <i>Q</i> — множество <u>возможных состояний</u> автомата,

@@ -51,7 +51,7 @@ function inputP(evt) {
     }
 }
 
-function filledSet(fillFrom, addition) {
+function filledSet(fillFrom, addition, check) {
     var set = addition;
     var elem = document.getElementById(fillFrom + "_set");
     var from = elem.value;
@@ -73,6 +73,15 @@ function filledSet(fillFrom, addition) {
         } else {
             comma = true;
             set.push(c);
+        }
+    }
+    for (i in check) {
+        const c = check[i];
+        if (set.indexOf(c) != -1) {
+            var error = document.getElementById(fillFrom + "_error");
+            error.innerHTML = "Символ «" + c + "» уже используется в грамматике.";
+            error.hidden = false;
+            throw "Symbol \"" + c + "\" already used";
         }
     }
     return set;
@@ -172,8 +181,8 @@ function analyze() {
     document.getElementById("production_error").hidden = true;
     document.getElementById("axiom_error").hidden = true;
     document.getElementById("make_word_worse").hidden = true;
-    TERMINAL = filledSet("terminal", ['λ', 'ε']);
-    NON_TERMINAL = filledSet("non_terminal", []);
+    TERMINAL = filledSet("terminal", ['ε'], []);
+    NON_TERMINAL = filledSet("non_terminal", [], TERMINAL);
     axiom = document.getElementById("axiom").value;
     var pr = {};
     var state = ANALYZER_STATE.S;
@@ -269,9 +278,9 @@ function analyze() {
             return;
         } else if (NON_TERMINAL.indexOf(axiom) == -1) {
 
-                a.innerHTML = "Аксиома должна быть <u>нетерминалом</u>.";
-                a.hidden = false;
-return;
+            a.innerHTML = "Аксиома должна быть <u>нетерминалом</u>.";
+            a.hidden = false;
+            return;
         }
     }
     if (!(axiom in productionRules)) {
@@ -544,9 +553,37 @@ function findOutFiniteStates() {
         }
         states[fromTo] = stateTransitions;
     }
-    document.getElementById("machine_function").innerHTML = stateTransitionFunction;
+    STATES = states;
+    document.getElementById("machine_function").innerHTML = printStateTable();
 }
+
+var STATES;
 
 function buildLeftToRightStateMachine() {
     findOutFiniteStates();
+}
+
+function printStateTable() {
+    var str = ["<table width='100%' border='3'><tr><td class='lined'><div class='sigma'>Σ</div><div class='q'><i>Q</i></div></td>"];
+    for (i in TERMINAL) {
+        str.push("<td class='header_vector'>", TERMINAL[i], "</td>");
+    }
+    str.push("</tr>");
+    for (s in STATES) {
+        str.push("<tr><td  class='main_vector'>", s, "</td>");
+        var state = STATES[s];
+        for (i in TERMINAL) {
+            if (state[TERMINAL[i]] != null)
+                str.push("<td>", state[TERMINAL[i]], "</td>");
+            else
+                str.push("<td>?</td>");
+        }
+        str.push("</tr>");
+    }
+    str.push("<tr><td class='main_vector'>?</td>");
+    for (i in TERMINAL) {
+        str.push("<td>?</td>");
+    }
+    str.push("</tr></table>");
+    return str.join("");
 }
