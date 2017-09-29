@@ -295,7 +295,10 @@ function analyze() {
     }
     const type = detectStateMachine();
     CURRENT_STATE_MACHINE_TYPE = type;
+    document.getElementById("terminal_set").disabled = true;
+    document.getElementById("non_terminal_set").disabled = true;
     document.getElementById("production_rules").disabled = true;
+    document.getElementById("axiom").disabled = true;
     var b = document.getElementById("submit_production");
     b.className = "disabled_button";
     b.innerHTML = "Принято";
@@ -317,7 +320,10 @@ function analyzeError(index, message) {
 
 function change() {
     document.getElementById("make_word_worse").hidden = true;
+    document.getElementById("terminal_set").disabled = false;
+    document.getElementById("non_terminal_set").disabled = false;
     document.getElementById("production_rules").disabled = false;
+    document.getElementById("axiom").disabled = false;
     var b = document.getElementById("submit_production");
     b.className = "button";
     b.innerHTML = "Принять";
