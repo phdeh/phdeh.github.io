@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="mask-icon" href="phdeh.svg" color="red">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P|Roboto+Slab:100,400&amp;subset=cyrillic"
+          rel="stylesheet">
+    <link href="../style.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <script src="js/main.js"></script>
+    <meta charset="UTF-8">
+    <title>phdeh.com — Комбинатор</title>
+</head>
+<body onload="">
+<input id="blur" type="text" style="position: absolute; opacity: 0;">
+<div class="header">
+    <div class="title">Комбинатор</div>
+    <div class="cite">phdeh.com</div>
+</div>
+<div class="content_block">
+    <div class="content">
+        <div class="author">@ <a target="_blank" href="https://vk.com/im?sel=380497467">Воробьев Д. С.</a>, гр. № 4631,
+            СПбГУАП
+        </div>
+        <div class="exercise">
+            Режим работы:
+            <div class="radio_container">
+                <ul>
+                    <li><input id="permutation" name="combtype" type="radio" checked>
+                        <label for="permutation">Перестановки</label>
+                        <div class="check"></div>
+                    </li>
+                    <li><input id="combination" name="combtype" type="radio"
+                    ><label for="combination">Сочетания</label>
+                        <div class="check"></div>
+                    </li>
+                </ul>
+            </div>
+            Названия элементов по умолчанию:
+            <div class="radio_container">
+                <ul>
+                    <li><input id="abc" name="nametype" type="radio" onchange="fillNumbers();" checked>
+                        <label for="abc">a, b, c,…</label>
+                        <div class="check"></div>
+                    </li>
+                    <li><input id="a1a2" name="nametype" type="radio" onchange="fillNumbers();"
+                    ><label for="a1a2">a<sub>1</sub>, a<sub>2</sub>, a<sub>3</sub>,…</label>
+                        <div class="check"></div>
+                    </li>
+                </ul>
+            </div>
+            <div class="question">
+                Число элементов: <input name="numberOfElements" type="number" pattern="\d*" placeholder="10"
+                                        onkeyup="fillNumbers();">
+            </div>
+            <div class="question">
+                Длина на выходе: <input name="lengthOfComb" name="studak" type="number" pattern="\d*" placeholder="10"
+                                        onkeyup="">
+            </div>
+            <div class="question">
+                Элементы:
+                <textarea name="elementsArea">
+                </textarea>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
