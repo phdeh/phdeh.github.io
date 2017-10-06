@@ -1,6 +1,6 @@
 body {
     background: #F3F3F3;
-    background-image: url("background.svg");
+    background-image: url("../background.svg");
     background-size: contain;
     background-position: center center;
     margin: 0;
