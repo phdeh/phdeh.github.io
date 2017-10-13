@@ -41,95 +41,217 @@
             Я дико извиняюсь, но корректных решений для этого номера варианта не завезли.
         </div>
         <div class="exercise" id="homework" hidden>
+            <div class="task">
             <h3>Задание 1</h3>
-            <p>В группе <b>30</b> студентов. Из них <b name="girls">(25 − n)</b> — девушки. Выбрали <b>четырёх</b> случайных
+            <p>В группе <b>30</b> студентов. Из них <b name="girls">(25 − n)</b> — девушки. Выбрали <b>четырёх</b>
+                случайных
                 студентов. Какова вероятность, что <b>два из них — девушки</b>?
             </p>
-            <h3>Решение [<a name="solution1" href="javascript:void (0)" onclick="handleSpoiler(event); return false;">показать</a>]</h3>
+            </div>
+            <h3>Решение [<a name="solution1" href="javascript:void (0)" onclick="handleSpoiler(event); return false;">показать</a>]
+            </h3>
             <div name="solution1" hidden>
-            <p>1) Вероятность того, что случайный студент — девушка — это задание на классическое определение
-                вероятности.
-                <b>P(девушка) = <span class="frac"><sup name="girls">n</sup><span>/</span><sub>30</sub></span></b>.
-            </p>
-            <p>2) Вероятность того, что случайный студент — парень — это вероятность события обратного событию <b>P(девушка)</b>.
-            Поэтому <b>P(парень) = 1 − P(девушка) = 1 − <span class="frac"><sup name="girls">n</sup><span>/</span><sub>30</sub>
+                <p>1) Вероятность того, что случайный студент — девушка — это задание на классическое определение
+                    вероятности.
+                    <b>P(девушка) = <span class="frac"><sup name="girls">n</sup><span>/</span><sub>30</sub></span></b>.
+                </p>
+                <p>2) Вероятность того, что случайный студент — парень — это вероятность события обратного событию <b>P(девушка)</b>.
+                    Поэтому <b>P(парень) = 1 − P(девушка) = 1 − <span class="frac"><sup
+                            name="girls">n</sup><span>/</span><sub>30</sub>
                 </span> =
-                    <span class="frac"><sup name="guys">m</sup><span>/</span><sub>30</sub></span></b>.
-            </p>
-            <p>3) Выбрали <b>четырёх</b> случайных студентов. Получается <b>2<sup>4</sup> = 16</b> возможных исходов.
-            Примем девушку за <b>1</b> и парня за <b>0</b> и составим таблицу всех возможных исходов.
-            </p>
-            <table width="100%">
-                <tr>
-                    <td></td><td>0</td><td>0</td><td>0</td><td>0</td>
-                </tr>
-                <tr>
-                    <td></td><td>1</td><td>0</td><td>0</td><td>0</td>
-                </tr>
-                <tr>
-                    <td></td><td>0</td><td>1</td><td>0</td><td>0</td>
-                </tr>
-                <tr>
-                    <td>√</td><td>1</td><td>1</td><td>0</td><td>0</td>
-                </tr>
-                <tr>
-                    <td></td><td>0</td><td>0</td><td>1</td><td>0</td>
-                </tr>
-                <tr>
-                    <td>√</td><td>1</td><td>0</td><td>1</td><td>0</td>
-                </tr>
-                <tr>
-                    <td>√</td><td>0</td><td>1</td><td>1</td><td>0</td>
-                </tr>
-                <tr>
-                    <td></td><td>1</td><td>1</td><td>1</td><td>0</td>
-                </tr>
-                <tr>
-                    <td></td><td>0</td><td>0</td><td>0</td><td>1</td>
-                </tr>
-                <tr>
-                    <td>√</td><td>1</td><td>0</td><td>0</td><td>1</td>
-                </tr>
-                <tr>
-                    <td>√</td><td>0</td><td>1</td><td>0</td><td>1</td>
-                </tr>
-                <tr>
-                    <td></td><td>1</td><td>1</td><td>0</td><td>1</td>
-                </tr>
-                <tr>
-                    <td>√</td><td>0</td><td>0</td><td>1</td><td>1</td>
-                </tr>
-                <tr>
-                    <td></td><td>1</td><td>0</td><td>1</td><td>1</td>
-                </tr>
-                <tr>
-                    <td></td><td>0</td><td>1</td><td>1</td><td>1</td>
-                </tr>
-                <tr>
-                    <td></td><td>1</td><td>1</td><td>1</td><td>1</td>
-                </tr>
-            </table>
-            <p>4) Исходы не равновероятны и составляющие их события независимы. Определяем вероятность каждого из
-                удовлетворяющих исходов по теореме об умножении вероятностей: <b>P = <span class="frac"><sup name="girls">n</sup><span>/</span><sub>30</sub>
+                        <span class="frac"><sup name="guys">m</sup><span>/</span><sub>30</sub></span></b>.
+                </p>
+                <p>3) Выбрали <b>четырёх</b> случайных студентов. Получается <b>2<sup>4</sup> = 16</b> возможных
+                    исходов.
+                    Примем девушку за <b>1</b> и парня за <b>0</b> и составим таблицу всех возможных исходов.
+                </p>
+                <table width="100%">
+                    <tr>
+                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>√</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>√</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>√</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>√</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>√</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>√</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                </table>
+                <p>4) Исходы не равновероятны и составляющие их события независимы. Определяем вероятность каждого из
+                    удовлетворяющих исходов по теореме об умножении вероятностей: <b>P(благоприятный исход) = <span
+                            class="frac"><sup name="girls">n</sup><span>/</span><sub>30</sub>
                 </span> · <span class="frac"><sup name="girls">n</sup><span>/</span><sub>30</sub>
                 </span> · <span class="frac"><sup name="guys">m</sup><span>/</span><sub>30</sub>
                 </span> · <span class="frac"><sup name="guys">m</sup><span>/</span><sub>30</sub>
-                </span> = <span class="frac"><sup name="each2girlsnum">n</sup><span>/</span><sub name="each2girlsden">d</sub>
+                </span> = <span class="frac"><sup name="each2girlsnum">n</sup><span>/</span><sub
+                            name="each2girlsden">d</sub>
                 </span> <span name="each2girls">t</span></b>.
-            </p>
-            <p>5) По теореме о полной вероятности и сложении событий, вычисляем общую вероятность всех удовлетворяющих
-                исходов. <b>6 · <span class="frac"><sup name="each2girlsnum">n</sup><span>/</span><sub name="each2girlsden">d</sub>
+                </p>
+                <p>5) По теореме о полной вероятности и сложении событий, вычисляем общую вероятность всех
+                    удовлетворяющих
+                    исходов. <b>P(2 девушки) = 6 · <span class="frac"><sup
+                            name="each2girlsnum">n</sup><span>/</span><sub name="each2girlsden">d</sub>
                 </span> = <span class="frac"><sup name="times6num">n</sup><span>/</span><sub name="times6den">d</sub>
                 </span> <span name="times6"></span></b>
-            </p>
+                </p>
             </div>
-            <p align="right">
+            <p class="answer" align="right">
                 <b>Ответ: P(2 девушки) <span name="times6"></span></b>
             </p>
+            <div class="task">
             <h3>Задание 2</h3>
-            <p></p>
-            <h3>Решение [<a name="solution2" href="javascript:void (0)" onclick="handleSpoiler(event); return false;">показать</a>]</h3>
+            <p>В программе экзамена <b>30</b> вопросов. Студент выучил <b name="questions">(n − 25)</b> из них.
+                Вероятность
+                получить оценку «2» за выученный вопрос = <b>0,1</b>. За невыученный — <b>0,9</b>. Какова вероятность
+                получить двойку?
+            </p>
+            </div>
+            <h3>Решение [<a name="solution2" href="javascript:void (0)" onclick="handleSpoiler(event); return false;">показать</a>]
+            </h3>
             <div name="solution2" hidden>
+                <p>
+                    1) Получение любого билета равновероятно, билетов ограниченное количество. Из этого следует, что
+                    вероятность выпадения выученного билета идёт по классическому определению. <b>P(выученный билет) =
+                    <span class="frac"><sup name="questions">n</sup><span>/</span><sub>30</sub></span></b>.
+                </p>
+                <p>
+                    2) Невыученный билет — это событие протовоположное выученному. Из этого следует, что
+                </p>
+                <p>
+                    3) Есть два независимых события и четыре возможных исхода испытания.
+                    Исходы не равновероятны и образуют полную группу, события не пересекаются,
+                    вероятность каждого определяется по теореме о произведении вероятностей.
+                </p>
+                <ol>
+                    <li>Попался выученный билет, не получил «2»;
+                        <b>P<sub>1</sub> = <span class="frac"><sup name="questions">n</sup><span>/</span><sub>30</sub></span>
+                            · (1 − 0,1) = <span name="good_ex_nerd">t<sub>1</sub></span></b>;</li>
+                    <li>Попался невыученный билет, не получил «2»;
+                        <b>P<sub>2</sub> = <span class="frac"><sup name="bad_questions">m</sup><span>/</span><sub>30</sub></span>
+                            · (1 − 0,9) = <span name="good_ex_dumb">t<sub>2</sub></span></b>;</li>
+                    <li>Попался выученный билет, получил «2»;
+                        <b>P<sub>3</sub> = <span class="frac"><sup name="questions">n</sup><span>/</span><sub>30</sub></span>
+                            · 0,1 = <span name="bad_ex_nerd">t<sub>3</sub></span></b>;</li>
+                    <li>Попался невыученный билет, получил «2»;
+                        <b>P<sub>4</sub> = <span class="frac"><sup name="bad_questions">m</sup><span>/</span><sub>30</sub></span>
+                            · 0,9 = <span name="bad_ex_dumb">t<sub>4</sub></span></b>.</li>
+                </ol>
+            </div>
+            <p class="answer" align="right">
+                <b>Ответ: Ø</b>
+            </p>
+            <div class="task">
+            <h3>Задание 3</h3>
+            <p>Есть два <s>стула</s> автопарка: в первом вероятность аварии равна <b><span class="frac"><sup>1</sup>
+                <span>/</span><sub>10</sub></span></b>, а во втором — <b><span class="frac"><sup>1</sup>
+                <span>/</span><sub>10 + n</sub></span></b>. Вызвали такси. Оно равновероятно могло приехать из любого
+                автопарка. Такси попало в аварию. Какова вероятность, что это — такси из <b>первого</b> автопарка?</p>
+            </div>
+            <h3>Решение [<a name="solution3" href="javascript:void (0)" onclick="handleSpoiler(event); return false;">показать</a>]
+            </h3>
+            <div name="solution3" hidden>
             </div>
             <p align="right">
                 <b>Ответ: Ø</b>
