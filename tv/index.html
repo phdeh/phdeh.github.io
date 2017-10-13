@@ -27,7 +27,7 @@
                 Контрольная работа № 1 по теории вероятности
             </h2>
             <div class="question" style="margin-top: 20px;">
-                Номер варианта: <input name="variant" type="number" pattern="\d*" placeholder="3"
+                Введите номер своего варианта: <input name="variant" type="number" pattern="\d*" placeholder="3"
                                        onkeypress="validate(false, event, event.target, calcall)" autofocus>
             </div>
             <div class="button_container">
@@ -217,7 +217,9 @@
                     <span class="frac"><sup name="questions">n</sup><span>/</span><sub>30</sub></span></b>.
                 </p>
                 <p>
-                    2) Невыученный билет — это событие протовоположное выученному. Из этого следует, что
+                    2) Невыученный билет — это событие протовоположное выученному. Из этого следует, что <b>P(невыученный билет) =
+                    1 − <span class="frac"><sup name="questions">n</sup><span>/</span><sub>30</sub></span> =
+                    <span class="frac"><sup name="bad_questions">m</sup><span>/</span><sub>30</sub></span></b>.
                 </p>
                 <p>
                     3) Есть два независимых события и четыре возможных исхода испытания.
@@ -238,9 +240,14 @@
                         <b>P<sub>4</sub> = <span class="frac"><sup name="bad_questions">m</sup><span>/</span><sub>30</sub></span>
                             · 0,9 = <span name="bad_ex_dumb">t<sub>4</sub></span></b>.</li>
                 </ol>
+                <p>
+                    4) По теореме о сложении вероятностей складываем вероятности удовлетворяющих исходов.
+                    <b>P(двойка) = <span name="bad_ex_nerd">t<sub>3</sub></span> + <span name="bad_ex_dumb">t<sub>4</sub></span>
+                        = <span name="ansneud"></span> <span name="ansneuddec"></span>.</b>
+                </p>
             </div>
             <p class="answer" align="right">
-                <b>Ответ: Ø</b>
+                <b>Ответ: P(двойка) <span name="ansneuddec"></span></b>
             </p>
             <div class="task">
             <h3>Задание 3</h3>

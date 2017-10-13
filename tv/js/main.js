@@ -59,6 +59,7 @@ function calcall() {
     } else
         hw.hidden = false;
     calcGirls(v);
+    calcNeud(v);
 }
 
 function calcGirls(v) {
@@ -109,6 +110,42 @@ function calcGirls(v) {
     });
     document.getElementsByName("times6").forEach(function (t) {
         t.innerHTML = approxtimes6 + " " + (approx6).toString().replace('.', ',');
+    });
+}
+
+function calcNeud(v) {
+    const questions = 25 - v;
+    const bad_questions = 30 - questions;
+    document.getElementsByName("questions").forEach(function (t) {
+        t.innerHTML = questions;
+    });
+    document.getElementsByName("bad_questions").forEach(function (t) {
+        t.innerHTML = bad_questions;
+    });
+    fill("good_ex_nerd", questions * 9);
+    fill("good_ex_dumb", bad_questions);
+    fill("bad_ex_nerd",  questions);
+    fill("bad_ex_dumb", bad_questions * 9);
+    fill("ansneud", questions + bad_questions * 9);
+    const ansneuddecfull = (questions + bad_questions * 9) / 300;
+    const ansneuddec = Math.round(ansneuddecfull * 10000) / 10000;
+    const approxneud = ansneuddecfull !== ansneuddec ? "≈" : "=";
+    document.getElementsByName("ansneuddec").forEach(function (t) {
+        t.innerHTML = approxneud + " " + (ansneuddec).toString().replace('.', ',');
+    });
+}
+
+function fill(name, value) {
+    var n = value;
+    var d = 300;
+    for (i = 2; i <= min(n, d); i++)
+        while (n % i == 0 && d % i == 0) {
+            n /= i;
+            d /= i;
+        }
+    var s = "<span class=\"frac\"><sup>"+n+"</sup><span>/</span><sub name>"+d+"</sub>";
+    document.getElementsByName(name).forEach(function (t) {
+        t.innerHTML = s;
     });
 }
 
