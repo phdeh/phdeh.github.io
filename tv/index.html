@@ -23,6 +23,9 @@
             СПбГУАП
         </div>
         <div class="exercise">
+            <h2>
+                Контрольная работа № 1 по теории вероятности
+            </h2>
             <div class="question" style="margin-top: 20px;">
                 Номер варианта: <input name="variant" type="number" pattern="\d*" placeholder="3"
                                        onkeypress="validate(false, event, event.target, calcall)" autofocus>
@@ -42,7 +45,8 @@
             <p>В группе <b>30</b> студентов. Из них <b name="girls">(25 − n)</b> — девушки. Выбрали <b>четырёх</b> случайных
                 студентов. Какова вероятность, что <b>два из них — девушки</b>?
             </p>
-            <h3>Решение</h3>
+            <h3>Решение [<a name="solution1" href="javascript:void (0)" onclick="handleSpoiler(event); return false;">показать</a>]</h3>
+            <div name="solution1" hidden>
             <p>1) Вероятность того, что случайный студент — девушка — это задание на классическое определение
                 вероятности.
                 <b>P(девушка) = <span class="frac"><sup name="girls">n</sup><span>/</span><sub>30</sub></span></b>.
@@ -118,6 +122,7 @@
                 </span> = <span class="frac"><sup name="times6num">n</sup><span>/</span><sub name="times6den">d</sub>
                 </span> <span name="times6"></span></b>
             </p>
+            </div>
             <p align="right">
                 <b>Ответ: P(2 девушки) <span name="times6"></span></b>
             </p>

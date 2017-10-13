@@ -17,8 +17,6 @@ function makeButtonIfMobile() {
                     focusOnScroll();
             }
         };
-    } else {
-        document.getElementsByName("studak")[0].focus();
     }
 }
 
@@ -112,4 +110,28 @@ function calcGirls(v) {
     document.getElementsByName("times6").forEach(function (t) {
         t.innerHTML = approxtimes6 + " " + (approx6).toString().replace('.', ',');
     });
+}
+
+function handleSpoiler(evt) {
+    var theEvent = evt || window.event;
+    var s = theEvent.target.innerHTML;
+    var n = theEvent.target.name;
+    if (s == 'показать') {
+        document.getElementsByName(n).forEach(function (t) {
+                if (t != theEvent.target)
+                    t.hidden = false;
+                else
+                    t.innerHTML = 'скрыть';
+            }
+        )
+    }
+    else if (s == 'скрыть') {
+        document.getElementsByName(n).forEach(function (t) {
+                if (t != theEvent.target)
+                    t.hidden = true;
+                else
+                    t.innerHTML = 'показать';
+            }
+        )
+    }
 }
