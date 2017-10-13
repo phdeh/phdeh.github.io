@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="mask-icon" href="phdeh.svg" color="red">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P|Roboto+Slab:100,400&amp;subset=cyrillic"
+          rel="stylesheet">
+    <link href="../style.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <script src="js/main.js"></script>
+    <meta charset="UTF-8">
+    <title>phdeh.com — Теория вероятности</title>
+</head>
+<body onload="">
+<input id="blur" type="text" style="position: absolute; opacity: 0;">
+<div class="header">
+    <div class="title">Теория вероятности</div>
+    <div class="cite">phdeh.com</div>
+</div>
+<div class="content_block">
+    <div class="content">
+        <div class="author">@ <a target="_blank" href="https://vk.com/im?sel=380497467">Воробьев Д. С.</a>, гр. № 4631,
+            СПбГУАП
+        </div>
+        <div class="exercise">
+            <div class="question" style="margin-top: 20px;">
+                Номер варианта: <input name="variant" type="number" pattern="\d*" placeholder="3"
+                                       onkeypress="validate(false, event, event.target, calcall)" autofocus>
+            </div>
+            <div class="button_container">
+                <div id="submitter" class="button" onclick=
+                        "validate(true, event, document.getElementsByName('studak')[0], calcall)"
+                     hidden>Ввести
+                </div>
+            </div>
+        </div>
+        <div class="error" id="error" hidden>
+            Я дико извиняюсь, но корректных решений для этого номера варианта не завезли.
+        </div>
+        <div class="exercise" id="homework" hidden>
+            <h3>Задание 1</h3>
+            <p>В группе <b>30</b> студентов. Из них <b name="girls">(25 − n)</b> — девушки. Выбрали <b>четырёх</b> случайных
+                студентов. Какова вероятность, что <b>два из них — девушки</b>?
+            </p>
+            <h3>Решение</h3>
+            <p>1) Вероятность того, что случайный студент — девушка — это задание на классическое определение
+                вероятности.
+                <b>P(девушка) = <span class="frac"><sup name="girls">n</sup><span>/</span><sub>30</sub></span></b>.
+            </p>
+            <p>2) Вероятность того, что случайный студент — парень — это вероятность события обратного событию <b>P(девушка)</b>.
+            Поэтому <b>P(парень) = 1 − P(девушка) = 1 − <span class="frac"><sup name="girls">n</sup><span>/</span><sub>30</sub>
+                </span> =
+                    <span class="frac"><sup name="guys">m</sup><span>/</span><sub>30</sub></span></b>.
+            </p>
+            <p>3) Выбрали <b>четырёх</b> случайных студентов. Получается <b>2<sup>4</sup> = 16</b> возможных исходов.
+            Примем девушку за <b>1</b> и парня за <b>0</b> и составим таблицу всех возможных исходов.
+            </p>
+            <table width="100%">
+                <tr>
+                    <td></td><td>0</td><td>0</td><td>0</td><td>0</td>
+                </tr>
+                <tr>
+                    <td></td><td>1</td><td>0</td><td>0</td><td>0</td>
+                </tr>
+                <tr>
+                    <td></td><td>0</td><td>1</td><td>0</td><td>0</td>
+                </tr>
+                <tr>
+                    <td>√</td><td>1</td><td>1</td><td>0</td><td>0</td>
+                </tr>
+                <tr>
+                    <td></td><td>0</td><td>0</td><td>1</td><td>0</td>
+                </tr>
+                <tr>
+                    <td>√</td><td>1</td><td>0</td><td>1</td><td>0</td>
+                </tr>
+                <tr>
+                    <td>√</td><td>0</td><td>1</td><td>1</td><td>0</td>
+                </tr>
+                <tr>
+                    <td></td><td>1</td><td>1</td><td>1</td><td>0</td>
+                </tr>
+                <tr>
+                    <td></td><td>0</td><td>0</td><td>0</td><td>1</td>
+                </tr>
+                <tr>
+                    <td>√</td><td>1</td><td>0</td><td>0</td><td>1</td>
+                </tr>
+                <tr>
+                    <td>√</td><td>0</td><td>1</td><td>0</td><td>1</td>
+                </tr>
+                <tr>
+                    <td></td><td>1</td><td>1</td><td>0</td><td>1</td>
+                </tr>
+                <tr>
+                    <td>√</td><td>0</td><td>0</td><td>1</td><td>1</td>
+                </tr>
+                <tr>
+                    <td></td><td>1</td><td>0</td><td>1</td><td>1</td>
+                </tr>
+                <tr>
+                    <td></td><td>0</td><td>1</td><td>1</td><td>1</td>
+                </tr>
+                <tr>
+                    <td></td><td>1</td><td>1</td><td>1</td><td>1</td>
+                </tr>
+            </table>
+            <p>4) Исходы не равновероятны и составляющие их события независимы. Определяем вероятность каждого из
+                удовлетворяющих исходов по теореме об умножении вероятностей: <b>P = <span class="frac"><sup name="girls">n</sup><span>/</span><sub>30</sub>
+                </span> · <span class="frac"><sup name="girls">n</sup><span>/</span><sub>30</sub>
+                </span> · <span class="frac"><sup name="guys">m</sup><span>/</span><sub>30</sub>
+                </span> · <span class="frac"><sup name="guys">m</sup><span>/</span><sub>30</sub>
+                </span> = <span class="frac"><sup name="each2girlsnum">n</sup><span>/</span><sub name="each2girlsden">d</sub>
+                </span> <span name="each2girls">t</span></b>.
+            </p>
+            <p>5) По теореме о полной вероятности и сложении событий, вычисляем общую вероятность всех удовлетворяющих
+                исходов. <b>6 · <span class="frac"><sup name="each2girlsnum">n</sup><span>/</span><sub name="each2girlsden">d</sub>
+                </span> = <span class="frac"><sup name="times6num">n</sup><span>/</span><sub name="times6den">d</sub>
+                </span> <span name="times6"></span></b>
+            </p>
+            <p align="right">
+                <b>Ответ: P(2 девушки) <span name="times6"></span></b>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
