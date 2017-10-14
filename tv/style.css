@@ -33,6 +33,10 @@ span.frac > sub {
     font: inherit;
 }
 
+span.big {
+    font-weight: 100;
+}
+
 table {
     table-layout: fixed;
     border-collapse: collapse;

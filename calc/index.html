@@ -92,31 +92,37 @@
 </head>
 <body onload="makeButtonIfMobile();">
 <input id="blur" type="text" style="position: absolute; opacity: 0;">
-    <div class="header"><div class="title">Калькулятор номера варианта лабораторной по&nbsp;С.&nbsp;А.&nbsp;О.&nbsp;Д.&nbsp;</div><div class="cite">phdeh.com</div></div>
-    <div class="content_block"><div class="content">
-        <div class="author">@ <a target="_blank" href="https://vk.com/im?sel=380497467">Воробьев Д. С.</a>, гр. № 4631, СПбГУАП</div>
+<div class="header">
+    <div class="title">Калькулятор номера варианта лабораторной по&nbsp;С.&nbsp;А.&nbsp;О.&nbsp;Д.&nbsp;</div>
+    <div class="cite">phdeh.com</div>
+</div>
+<div class="content_block">
+    <div class="content">
+        <div class="author">@ <a target="_blank" href="https://vk.com/im?sel=380497467">Воробьев Д. С.</a>, гр. № 4631,
+            СПбГУАП
+        </div>
         <div class="exercise" id="work1">
 
-    <div>
-        Возьмите свой студенческий билет и найдите в&nbsp;нём номер. На&nbsp;примере это номер «0365».
-    </div>
-    <div class="img_container"><img src="studak.svg"></div>
-    <div class="question">
-        Введите номер в это поле: <input name="studak" type="number" pattern="\d*" placeholder="0365"
-                                         onkeypress="validate(false, event, event.target, jumpToLabs)">
-    </div>
-    <div  class="question" id="numberoflabs" hidden>
-        Теперь введите число лабораторных: <input name="labs" type="number" pattern="\d*" placeholder="25"
-                                                  onkeypress="validate(false, event, event.target, countLab)" s>
-    </div>
-    <div class="button_container">
-        <div id="submitter" class="button" onclick=
-                "validate(true, event, document.getElementsByName('studak')[0], jumpToLabs); schollDown = false;"
-             hidden>Ввести
+            <div>
+                Возьмите свой студенческий билет и найдите в&nbsp;нём номер. На&nbsp;примере это номер «0365».
+            </div>
+            <div class="img_container"><img src="studak.svg"></div>
+            <div class="question">
+                Введите номер в это поле: <input name="studak" type="number" pattern="\d*" placeholder="0365"
+                                                 onkeypress="validate(false, event, event.target, jumpToLabs)">
+            </div>
+            <div class="question" id="numberoflabs" hidden>
+                Теперь введите число лабораторных: <input name="labs" type="number" pattern="\d*" placeholder="25"
+                                                          onkeypress="validate(false, event, event.target, countLab)" s>
+            </div>
+            <div class="button_container">
+                <div id="submitter" class="button" onclick=
+                        "validate(true, event, document.getElementsByName('studak')[0], jumpToLabs); schollDown = false;"
+                     hidden>Ввести
+                </div>
+            </div>
+            <p id="variantp" hidden> Ваш вариант: </p>
+            <div id="variant" class="variant" hidden></div>
         </div>
-    </div>
-    <p id="variantp" hidden> Ваш вариант: </p>
-    <div id="variant" class="variant" hidden></div>
-</div>
 </body>
 </html>

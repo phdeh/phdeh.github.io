@@ -60,6 +60,7 @@ function calcall() {
         hw.hidden = false;
     calcGirls(v);
     calcNeud(v);
+    calcAv(v);
 }
 
 function calcGirls(v) {
@@ -124,7 +125,7 @@ function calcNeud(v) {
     });
     fill("good_ex_nerd", questions * 9);
     fill("good_ex_dumb", bad_questions);
-    fill("bad_ex_nerd",  questions);
+    fill("bad_ex_nerd", questions);
     fill("bad_ex_dumb", bad_questions * 9);
     fill("ansneud", questions + bad_questions * 9);
     const ansneuddecfull = (questions + bad_questions * 9) / 300;
@@ -143,7 +144,7 @@ function fill(name, value) {
             n /= i;
             d /= i;
         }
-    var s = "<span class=\"frac\"><sup>"+n+"</sup><span>/</span><sub name>"+d+"</sub>";
+    var s = "<span class=\"frac\"><sup>" + n + "</sup><span>/</span><sub name>" + d + "</sub>";
     document.getElementsByName(name).forEach(function (t) {
         t.innerHTML = s;
     });
@@ -171,4 +172,44 @@ function handleSpoiler(evt) {
             }
         )
     }
+}
+
+function calcAv(v) {
+    const secauto = 10 + v;
+    var n = 10 + secauto;
+    var d = 10 * secauto;
+    for (var i = 2; i < min(n, d); i++)
+        while (n % i == 0 && d % i == 0) {
+            n /= i;
+            d /= i;
+        }
+    document.getElementsByName("secauto").forEach(function (t) {
+        t.innerHTML = secauto;
+    });
+    document.getElementsByName("avnum").forEach(function (t) {
+        t.innerHTML = n;
+    });
+    document.getElementsByName("avden").forEach(function (t) {
+        t.innerHTML = d;
+    });
+    n *= 10;
+
+    for (var i = 2; i < min(n, d); i++)
+        while (n % i == 0 && d % i == 0) {
+            n /= i;
+            d /= i;
+        }
+    document.getElementsByName("ansavnum").forEach(function (t) {
+        t.innerHTML = d;
+    });
+    document.getElementsByName("ansavden").forEach(function (t) {
+        t.innerHTML = n;
+    });
+    const ansneuddecfull = d / n;
+    const ansneuddec = Math.round(ansneuddecfull * 10000) / 10000;
+    const approxneud = ansneuddecfull !== ansneuddec ? "≈" : "=";
+    document.getElementsByName("ansav").forEach(function (t) {
+        t.innerHTML = approxneud + " " + (ansneuddec).toString().replace('.', ',');
+    });
+
 }
