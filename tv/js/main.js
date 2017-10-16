@@ -177,7 +177,7 @@ function handleSpoiler(evt) {
 function calcAv(v) {
     const secauto = 10 + v;
     var n = 10 + secauto;
-    var d = 10 * secauto;
+    var d = 20 * secauto;
     for (var i = 2; i < min(n, d); i++)
         while (n % i == 0 && d % i == 0) {
             n /= i;
@@ -192,7 +192,7 @@ function calcAv(v) {
     document.getElementsByName("avden").forEach(function (t) {
         t.innerHTML = d;
     });
-    n *= 10;
+    n *= 20;
 
     for (var i = 2; i < min(n, d); i++)
         while (n % i == 0 && d % i == 0) {
