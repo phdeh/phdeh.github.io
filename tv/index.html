@@ -52,7 +52,26 @@
             <h3>Решение [<a name="solution1" href="javascript:void (0)" onclick="handleSpoiler(event); return false;">показать</a>]
             </h3>
             <div name="solution1" hidden>
-
+                <p>
+                    1) Количество всевозможных сочетаний <b>C<sup>4</sup><sub>30</sub> =
+                    <span class="frac"><sup>30!</sup><span>/</span><sub>4! · (30 − 4)!</sub></span> =
+                    <span name="4studs"></span></b>
+                </p>
+                <p>
+                    2) Количество всевозможных сочетаний с двумя девушками <b>C<sup>2</sup><sub name="girls">(25 - n)</sub> =
+                    <span class="frac"><sup ><span name="girls">(25 - n)</span>!</sup><span>/</span><sub>2! · (<span name="girls">(25 - n)</span> − 2)!</sub></span> =
+                    <span name="2girls"></span></b>
+                </p>
+                <p>
+                    3) Количество всевозможных сочетаний с двумя парнями <b>C<sup>2</sup><sub name="guys">(5 + n)</sub> =
+                    <span class="frac"><sup ><span name="guys">(5 + n)</span>!</sup><span>/</span><sub>2! · (<span name="guys">(5 + n)</span> − 2)!</sub></span> =
+                    <span name="2guys"></span></b>
+                </p>
+                <p>
+                    4) <b><span class="frac"><sup><span name="2girls"></span> · <span name="2guys"></span></sup><span>/</span><sub><span name="4studs"></span></sub></span>
+                <span name="times6"></span>
+                </b>
+                </p>
             </div>
             <p class="answer" align="right">
                 <b>Ответ: P(2 девушки) <span name="times6">= Ø</span></b>

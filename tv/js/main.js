@@ -66,7 +66,7 @@ function calcall() {
 function calcGirls(v) {
     const girls = 25 - v;
     const guys = 30 - (25 - v);
-    const studs4 = factorial(30) / (factorial(4) * factorial(30 - 4));
+    const studs4 = Math.round(factorial(30) / (factorial(4) * factorial(30 - 4)));
     const girls2 = factorial(girls) / (factorial(2) * factorial(girls - 2));
     const guys2 = factorial(guys) / (factorial(2) * factorial(guys - 2));
     const times6 = girls2 * guys2 / studs4;
