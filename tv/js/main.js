@@ -64,7 +64,39 @@ function calcall() {
 }
 
 function calcGirls(v) {
+    const girls = 25 - v;
+    const guys = 30 - (25 - v);
+    const studs4 = factorial(30) / (factorial(4) * factorial(30 - 4));
+    const girls2 = factorial(girls) / (factorial(2) * factorial(girls - 2));
+    const guys2 = factorial(guys) / (factorial(2) * factorial(guys - 2));
+    const times6 = girls2 * guys2 / studs4;
+    const ansneuddec = Math.round(times6 * 10000) / 10000;
+    const approxneud = times6 !== ansneuddec ? "≈" : "=";
+    document.getElementsByName("girls").forEach(function (t) {
+        t.innerHTML = girls;
+    });
+    document.getElementsByName("guys").forEach(function (t) {
+        t.innerHTML = guys;
+    });
+    document.getElementsByName("4studs").forEach(function (t) {
+        t.innerHTML = studs4;
+    });
+    document.getElementsByName("2girls").forEach(function (t) {
+        t.innerHTML = girls2;
+    });
+    document.getElementsByName("2guys").forEach(function (t) {
+        t.innerHTML = guys2;
+    });
+    document.getElementsByName("times6").forEach(function (t) {
+        t.innerHTML = approxneud + " " + ansneuddec.toString().replace(".", ",");
+    });
+}
 
+function factorial(i) {
+    var f = 1;
+    for (var j = 1; j <= i; j++)
+        f *= j;
+    return f;
 }
 
 function calcNeud(v) {
