@@ -64,54 +64,7 @@ function calcall() {
 }
 
 function calcGirls(v) {
-    const girls = 25 - v;
-    const guys = 30 - (25 - v);
-    var each2girlsnum = girls * girls * guys * guys;
-    var each2girlsden = 30 * 30 * 30 * 30;
-    for (var i = 2; i <= min(each2girlsden, each2girlsnum); ++i)
-        while (each2girlsden % i == 0 && each2girlsnum % i == 0) {
-            each2girlsden /= i;
-            each2girlsnum /= i;
-        }
-    var each2girls = each2girlsnum / each2girlsden;
-    var approxe2g = Math.round(each2girls * 10000) / 10000;
-    var approxgirls = approxe2g !== each2girls ? "≈" : "=";
 
-    var times6num = each2girlsnum * 6;
-    var times6den = each2girlsden;
-    for (var i = 2; i <= min(times6den, times6num); ++i)
-        while (times6den % i == 0 && times6num % i == 0) {
-            times6den /= i;
-            times6num /= i;
-        }
-    var times6 = times6num / times6den;
-    var approx6 = Math.round(times6 * 10000) / 10000;
-    var approxtimes6 = approxe2g !== each2girls ? "≈" : "=";
-    document.getElementsByName("girls").forEach(function (t) {
-        t.innerHTML = girls;
-    });
-    document.getElementsByName("guys").forEach(function (t) {
-        t.innerHTML = guys;
-    });
-    document.getElementsByName("each2girlsnum").forEach(function (t) {
-        t.innerHTML = each2girlsnum;
-    });
-    document.getElementsByName("each2girlsden").forEach(function (t) {
-        t.innerHTML = each2girlsden;
-    });
-    document.getElementsByName("each2girls").forEach(function (t) {
-        t.innerHTML = approxgirls + " " + (approxe2g).toString().replace('.', ',');
-    });
-
-    document.getElementsByName("times6num").forEach(function (t) {
-        t.innerHTML = times6num;
-    });
-    document.getElementsByName("times6den").forEach(function (t) {
-        t.innerHTML = times6den;
-    });
-    document.getElementsByName("times6").forEach(function (t) {
-        t.innerHTML = approxtimes6 + " " + (approx6).toString().replace('.', ',');
-    });
 }
 
 function calcNeud(v) {
