@@ -128,6 +128,7 @@ function calcall() {
     } else
         hw.hidden = false;
     calcEx1(v);
+    calcEx2(v);
     MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
 }
 
@@ -163,15 +164,63 @@ function calcEx1(n) {
     fillAll("ex1_ans", "$P_2 = " + str + " \\approx " + approxfrac(ans) + "$");
 }
 
-function combination(n, k) {
+function calcEx2(v) {
+    var p = 0.51;
+    var q = 1 - p;
+    var n = 50 + 10 * v;
+    var k1 = Math.floor(n / 2) + 1;
+    var k2 = n;
+    var sqrt = Math.sqrt(n * p * q);
+    fillAll("ex2_young", "$n' = " + n + "$");
+    fillAll("ex2_k1", "$k_1 = " + k1 + "$");
+    fillAll("ex2_k2", "$k_2 = " + k2 + "$");
+    fillAll("ex2_sqrt", "$\\sqrt{npq} = \\sqrt{" + n + " \\cdot 0{,}51 \\cdot 0{,}49} = " + approxfrac([sqrt, 1]) + " $");
+    var Phi1 = stdNormal((k1 - n * p) / (sqrt));
+    var Phi2 = stdNormal((k2 - n * p) / (sqrt));
+    var P = approxfrac([Phi2 - Phi1, 1]);
+    fillAll("ex2_phi1", "$\\Phi_1\\bigl(\\frac{" + k1 + "-" + n + "\\cdot" + p + "}{" + sqrt + "}\\bigr)=" + approxfrac([Phi1, 1]) + "$");
+    fillAll("ex2_phi2", "$\\Phi_2\\bigl(\\frac{" + k2 + "-" + n + "\\cdot" + p + "}{" + sqrt + "}\\bigr)=" + approxfrac([Phi2, 1]) + "$");
+    fillAll("ex2_fans", "$P(k_1 \\leqslant k \\leqslant k_2) = \\Phi_2 - \\Phi_1 = " + P + "$");
+    fillAll("ex2_ans", "$P(k_1 \\leqslant k \\leqslant k_2) = " + P + "$");
+}
 
+function stdNormal(z) {
+    var j, k, kMax, m, values, total, subtotal, item, z2, z4, a, b;
+    if (z < -6) {
+        return 0;
+    }
+    if (z > 6) {
+        return 1;
+    }
+    m = 1;
+    b = z;
+    z2 = z * z;
+    z4 = z2 * z2;
+    values = [];
+    for (k = 0; k < 100; k += 2) {
+        a = 2 * k + 1;
+        item = b / (a * m);
+        item *= (1 - (a * z2) / ((a + 1) * (a + 2)));
+        values.push(item);
+        m *= (4 * (k + 1) * (k + 2));
+        b *= z4;
+    }
+    total = 0;
+    for (k = 49; k >= 0; k--) {
+        total += values[k];
+    }
+    return 0.5 + 0.3989422804014327 * total;
+}
+
+function combination(n, k) {
+    //*
     var nom = 1;
     var den = 1;
     for (var i = n - k + 1; i <= n; i++)
         nom *= i;
     den = factorial(k);
     return frac(nom, den);
-    //return frac(factorial(n), factorial(k) * factorial(n - k));
+    // */ return frac(factorial(n), factorial(k) * factorial(n - k));
 }
 
 function factorial(i) {
@@ -255,6 +304,10 @@ function strfrac(f1) {
 
 function approxfrac(f1) {
     var r = (f1[0] / f1[1]).toExponential(2).replace(".", "{,}");
+    if (r.indexOf("e+1") != -1)
+        r = r.replace("e+1", "\\cdot10");
+    if (r.indexOf("e+0") != -1)
+        r = r.replace("e+0", "");
     if (r.indexOf("e") != -1)
         r = r.replace("e", "\\cdot10^{") + "}";
     return r;
