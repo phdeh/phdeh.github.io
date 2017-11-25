@@ -164,12 +164,16 @@ function calcEx1(n) {
 }
 
 function combination(n, k) {
+    /*
     var nom = 1;
     var den = 1;
     for (var i = n - k + 1; i <= n; i++)
         nom *= i;
     den = factorial(k);
     return frac(nom, den);
+    */
+
+    return frac(factorial(n), factorial(k) * factorial(n - k));
 }
 
 function factorial(i) {
