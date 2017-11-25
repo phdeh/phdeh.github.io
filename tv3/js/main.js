@@ -178,8 +178,8 @@ function calcEx2(v) {
     var Phi1 = stdNormal((k1 - n * p) / (sqrt));
     var Phi2 = stdNormal((k2 - n * p) / (sqrt));
     var P = approxfrac([Phi2 - Phi1, 1]);
-    fillAll("ex2_phi1", "$\\Phi_1\\bigl(\\frac{" + k1 + "-" + n + "\\cdot" + p + "}{" + sqrt + "}\\bigr)=" + approxfrac([Phi1, 1]) + "$");
-    fillAll("ex2_phi2", "$\\Phi_2\\bigl(\\frac{" + k2 + "-" + n + "\\cdot" + p + "}{" + sqrt + "}\\bigr)=" + approxfrac([Phi2, 1]) + "$");
+    fillAll("ex2_phi1", "$\\Phi_1\\bigl(\\frac{" + k1 + "-" + n + "\\cdot0{,}51}{" + sqrt + "}\\bigr)=" + approxfrac([Phi1, 1]) + "$");
+    fillAll("ex2_phi2", "$\\Phi_2\\bigl(\\frac{" + k2 + "-" + n + "\\cdot0{,}51}{" + sqrt + "}\\bigr)=" + approxfrac([Phi2, 1]) + "$");
     fillAll("ex2_fans", "$P(k_1 \\leqslant k \\leqslant k_2) = \\Phi_2 - \\Phi_1 = " + P + "$");
     fillAll("ex2_ans", "$P(\\text{М $>$ Ж}) = " + P + "$");
 }
