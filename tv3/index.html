@@ -126,12 +126,16 @@ MathJax.Hub.Config({
             <div name="solution2" hidden>
                 <p>
                     <b>1)</b>
-                    Число $n'$ велико, а $p$ отличимо от $1$ и $0$, а вероятность учитывается для большого промежутка возможных
+                    Число $n'$ велико, а $p$ отличимо от $1$ и $0$, и вероятность учитывается для большого промежутка возможных
                     значений $k$, поэтому решать будем по интегральной теореме Муавра&nbsp;— Лапласа:
                     $$P_{k_1, k_2, n'} \approx \Phi\biggl(\frac{k_2-np}{\sqrt{npq}}\biggr) - \Phi\biggl(\frac{k_1-np}{\sqrt{npq}}\biggr)$$
                 </p>
                 <p>
-                    <span name="ex2_sqrt">$\sqrt{npq}$</span>, <span name="ex2_k1">$k_1$</span>, <span name="ex2_k2">$k_2$</span>
+                    <span name="ex2_sqrt">$\sqrt{npq}$</span>.
+                </p>
+                <p>
+                    Условию удовлетворяют $\forall k \in \overline{0,n'}\colon k > \frac n2$, поэтому пусть $\forall k \in \overline{k_1, k_2}$,
+                    где <span name="ex2_k1">$k_1$</span>, <span name="ex2_k2">$k_2$.</span>.
                 </p>
                 <p>
                     <b>
