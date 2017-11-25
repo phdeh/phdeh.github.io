@@ -5,21 +5,25 @@ body {
     margin: 0;
     padding: 0;
     font-size: 16pt;
-    font-family: 'Roboto Slab', sans-serif;
+    font-family: 'Roboto', sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
 }
 
+h1, h2, h3 {
+    font-family: 'Roboto Slab', sans-serif;
+}
+
 input {
     float: right;
     display: table-cell;
-    width: 150px;
+    width: 120px;
     padding: 0 9px 1px 9px;
     font-size: 18pt;
     height: 25pt;
-    font-family: 'Roboto Slab', sans-serif;
+    font-family: 'Roboto', sans-serif;
     border: solid black 3px;
     -moz-appearance: textfield;
 }
@@ -61,6 +65,14 @@ input[type=number]::-webkit-outer-spin-button {
     justify-content: center;
 }
 
+p {
+    hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    word-wrap: break-word;
+}
+
 a {
     color: #DD0000;
 }
@@ -75,7 +87,7 @@ textarea {
     height: 150px;
     padding: 0px 20px 20px 8px;
     font-size: 18pt;
-    font-family: 'Roboto Slab', serif;
+    font-family: 'Roboto', sans-serif;
     border: solid black 3px;
     -moz-appearance: textfield;
 }
@@ -129,6 +141,7 @@ textarea:disabled {
     -o-user-select: none;
 
     background: #DD0000;
+    font-family: 'Roboto Slab', sans-serif;
     font-size: 24pt;
     color: white;
     cursor: pointer;
@@ -150,6 +163,7 @@ textarea:disabled {
     -webkit-user-select: none;
     -o-user-select: none;
     background: #777777;
+    font-family: 'Roboto Slab', sans-serif;
     font-size: 24pt;
     color: white;
     cursor: default;
@@ -174,6 +188,7 @@ textarea:disabled {
     max-width: 100%;
     word-break: break-all;
     width: 100%;
+    font-family: 'Roboto Slab', sans-serif;
     font-weight: 200;
     text-align: center;
     font-size: 81pt;
@@ -191,12 +206,14 @@ textarea:disabled {
 .cite {
     float: left;
     margin-left: 25px;
+    font-family: 'Roboto Slab', sans-serif;
 }
 
 
 .title {
     float: right;
     margin-right: 25px;
+    font-family: 'Roboto Slab', sans-serif;
 }
 
 .author {
