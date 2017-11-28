@@ -181,7 +181,7 @@ function calcEx2(v) {
     fillAll("ex2_phi1", "$\\Phi_1\\bigl(\\frac{" + k1 + "-" + n + "\\cdot0{,}51}{" + sqrt + "}\\bigr)=" + approxfrac([Phi1, 1]) + "$");
     fillAll("ex2_phi2", "$\\Phi_2\\bigl(\\frac{" + k2 + "-" + n + "\\cdot0{,}51}{" + sqrt + "}\\bigr)=" + approxfrac([Phi2, 1]) + "$");
     fillAll("ex2_fans", "$P(k_1 \\leqslant k \\leqslant k_2) = \\Phi_2 - \\Phi_1 = " + P + "$");
-    fillAll("ex2_ans", "$P(\\text{М $>$ Ж}) = " + P + "$");
+    fillAll("ex2_ans", "$P(\\text{М $<$ Ж}) = " + P + "$");
 }
 
 function stdNormal(z) {
