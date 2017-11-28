@@ -4,7 +4,7 @@ function init() {
     $(function () {
         $('p').hyphenate();
         $('').hyphenate();
-    })
+    });
 }
 
 $.fn.hyphenate = function () {
@@ -168,8 +168,8 @@ function calcEx2(v) {
     var p = 0.51;
     var q = 1 - p;
     var n = 50 + 10 * v;
-    var k1 = Math.floor(n / 2) + 1;
-    var k2 = n;
+    var k1 = 0;
+    var k2 = Math.ceil(n / 2) - 1;
     var sqrt = Math.sqrt(n * p * q);
     fillAll("ex2_young", "$n' = " + n + "$");
     fillAll("ex2_k1", "$k_1 = " + k1 + "$");
