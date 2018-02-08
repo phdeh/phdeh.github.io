@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,400,700|Roboto:100,400&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,400,700|Roboto:100,400&amp;subset=cyrillic,cyrillic-ext,latin-ext"
+          rel="stylesheet">
     <link href="../style.css" rel="stylesheet">
     <script>
         function detectmob() {
@@ -28,6 +29,56 @@
             } else {
                 document.getElementsByName("studak")[0].focus();
             }
+        }
+
+        var subjectField = [
+            "Обслуживание читателей в библиотеке (см п. 2.2.1)",
+            "Обслуживание клиентов в бюро проката автомобилей (см. п. 2.2.2)",
+            "Регистрация постояльцев в гостинице (см. п. 2.2.3)",
+            "Регистрация больных в поликлинике (см. п. 2.2.4)",
+            "Продажа авиабилетов (см. п. 2.2.5)",
+            "Обслуживание клиентов оператора сотовой связи (см. п. 2.2.6)"
+        ];
+
+        var hashMethod = [
+            "Открытое хеширование",
+            "Закрытое хеширование с линейным опробованием",
+            "Закрытое хеширование с квадратичным опробованием",
+            "Закрытое хеширование с двойным хешированием"
+        ];
+
+        var sortMethod = [
+            "Подсчетом",
+            "Включением",
+            "Извлечением",
+            "Пузырьковый",
+            "Быстрый (Хоара)",
+            "Слиянием",
+            "Распределением"
+        ];
+
+        var listKind = [
+            "Линейный однонаправленный",
+            "Линейный двунаправленный",
+            "Циклический однонаправленный",
+            "Циклический двунаправленный",
+            "Слоеный"
+        ];
+
+        var methodTree = [
+            "Симметричный",
+            "Обратный",
+            "Прямой"
+        ];
+
+        var wordFindAlgorithm = [
+            "Боуера и Мура (БМ)",
+            "Прямой"
+        ];
+
+        function genk(number, name, k) {
+            var i = number % k.length;
+            return "<li><b>" + name + ":</b><br><span style='margin-left: 10px; padding-bottom: 10px;'>" + i + ". " + k[i] + "</span></li>"
         }
 
         var schollDown = true;
@@ -56,36 +107,43 @@
         }
 
         function jumpToLabs() {
-            if (document.getElementsByName("labs")[0].value)
-                countLab();
-            else {
-                var el = document.getElementById("numberoflabs");
-                el.hidden = false;
-                el = document.getElementsByName("labs")[0];
-                el.focus();
-                var alignWithTop = true;
-                el.scrollIntoView(alignWithTop);
-                document.getElementById("submitter").onclick = function () {
-                    validate(true, event, document.getElementsByName('labs')[0], countLab)
-                }
+            var el = document.getElementById("numberoflabs");
+            el.hidden = false;
+            el = document.getElementsByName("labs")[0];
+            el.focus();
+            var alignWithTop = true;
+            el.scrollIntoView(alignWithTop);
+            document.getElementById("submitter").onclick = function () {
+                validate(true, event, document.getElementsByName('labs')[0], countLab)
             }
         }
 
         function countLab() {
             var studak = document.getElementsByName("studak")[0].value;
-            if (studak.length > 2)
-                studak = studak.charAt(studak.length - 2) + studak.charAt(studak.length - 1)
-            var labs = document.getElementsByName("labs")[0].value;
+            if (studak.length > 3)
+                studak = studak.charAt(studak.length - 3) + studak.charAt(studak.length - 2) + studak.charAt(studak.length - 1);
+            var labs = 0;
+            var studak = parseInt(studak);
             var el = document.getElementById("variantp");
             el.hidden = false;
             el = document.getElementById("variant");
             el.hidden = false;
-            el.innerHTML = ((studak % labs === 0) ? labs : (studak % labs)) + "-й";
             var alignWithTop = true;
             el.scrollIntoView(alignWithTop);
             document.getElementById("submitter").onclick = function () {
                 validate(true, event, document.getElementsByName('labs')[0], jumpToLabs)
             }
+            var t = [
+                "<ul>",
+                genk(studak, "Предметная область", subjectField),
+                genk(studak, "Метод хеширования", hashMethod),
+                genk(studak, "Метод сортировки", sortMethod),
+                genk(studak, "Вид списка", listKind),
+                genk(studak, "Метод обхода дерева", methodTree),
+                genk(studak, "Алгоритм поиска слова в тексте", wordFindAlgorithm),
+                "</ul>"
+            ].join('');
+            el.innerHTML = t;
         }
     </script>
     <title>Номер варианта</title>
@@ -93,7 +151,7 @@
 <body onload="makeButtonIfMobile();">
 <input id="blur" type="text" style="position: absolute; opacity: 0;">
 <div class="header">
-    <div class="title">Калькулятор номера варианта лабораторной по&nbsp;С.&nbsp;А.&nbsp;О.&nbsp;Д.&nbsp;</div>
+    <div class="title">Калькулятор варианта КУРСОВОЙ по&nbsp;С.&nbsp;А.&nbsp;О.&nbsp;Д.&nbsp;</div>
     <div class="cite">phdeh.com</div>
 </div>
 <div class="content_block">
@@ -106,20 +164,16 @@
             <div class="img_container"><img src="studak.svg"></div>
             <div class="question">
                 Введите номер в это поле: <input name="studak" type="number" pattern="\d*" placeholder="0365"
-                                                 onkeypress="validate(false, event, event.target, jumpToLabs)">
-            </div>
-            <div class="question" id="numberoflabs" hidden>
-                Теперь введите число лабораторных: <input name="labs" type="number" pattern="\d*" placeholder="25"
-                                                          onkeypress="validate(false, event, event.target, countLab)" s>
+                                                 onkeypress="validate(false, event, event.target, countLab)">
             </div>
             <div class="button_container">
                 <div id="submitter" class="button" onclick=
-                        "validate(true, event, document.getElementsByName('studak')[0], jumpToLabs); schollDown = false;"
+                        "validate(true, event, document.getElementsByName('studak')[0], countLab); schollDown = false;"
                      hidden>Ввести
                 </div>
             </div>
             <p id="variantp" hidden> Ваш вариант: </p>
-            <div id="variant" class="variant" hidden></div>
+            <div id="variant" hidden></div>
         </div>
 </body>
 </html>
