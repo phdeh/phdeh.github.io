@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="js/utils.js"></script>
+    <script src="js/lexems.js"></script>
+    <script src="js/lexer.js"></script>
+    <script src="js/parser.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        function handle() {
+            var code = $("#code").val();
+            var tokenized = tokenize(code);
+            var parsed = parse(tokenized);
+            var rendered = render(parsed);
+            var calculated = calculate(parsed).value;
+            $("#result").html(rendered + " = " + calculated);
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono:700|Roboto+Slab&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext');
+
+        * {
+        }
+
+        body {
+            background: #E7E7E7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .log {
+            background: #ffffff;
+            max-width: 800px;
+            padding: 10px 10px 10px 10px;
+            border: solid 3px black;
+            width: calc(100% - 20px);
+            font-size: 12pt;
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        .result {
+            background: #ffffff;
+            max-width: 800px;
+            padding: 10px 10px 10px 10px;
+            margin-bottom: 2px;
+            font-size: 12pt;
+            border: solid 3px black;
+            width: calc(100% - 20px);
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .button {
+            user-select: none;
+            -moz-user-select: none;
+            -khtml-user-select: none;
+            -webkit-user-select: none;
+            -o-user-select: none;
+
+            background: #DD0000;
+            font-family: 'Roboto Slab', sans-serif;
+            font-size: 15pt;
+            text-shadow: 0 2px 0 rgba(0, 0, 0, 1);
+            border: solid 3px black;
+            color: white;
+            cursor: pointer;
+            min-width: 120px;
+            max-width: calc(100% - 25px);
+            padding-left: 10px;
+            padding-right: 10px;
+            box-shadow: 0 10px 0 rgba(0, 0, 0, 1);
+            line-height: 45pt;
+            text-align: center;
+            margin: 0 0 12px 0;
+        }
+
+        .button:hover {
+            transform: translate(0px, 5px);
+            box-shadow: 0 5px 0 rgba(0, 0, 0, 1);
+        }
+
+        .expression {
+            background: rgba(200, 0, 0, .1);
+            padding: 5px 5px 5px 5px;
+            margin: 5px 5px 5px 5px;
+        }
+    </style>
+    <title>Lana Interprier</title>
+</head>
+<body onload="handle()">
+<textarea class="log" id="code">
+15 - 25 * 3 ^ 4 ^ 3
+</textarea>
+<div class="button" onclick="handle()">Обработать</div>
+<div class="result" id="result">
+Няшный результат.
+</div>
+<div class="log" id="log" style="white-space: pre" hidden>
+
+</div>
+<div class="button" id="logbutton" onclick="$('#log').show(); $('#logbutton').hide()">Показать лог</div>
+</body>
+</html>
