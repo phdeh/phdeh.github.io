@@ -13,7 +13,7 @@
             var tokenized = tokenize(code);
             var parsed = parse(tokenized);
             var rendered = render(parsed);
-            var calculated = calculate(parsed).value;
+            var calculated = render(calculate(parsed));
             $("#result").html(rendered + " = " + calculated);
         }
     </script>
@@ -21,6 +21,16 @@
         @import url('https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono:700|Roboto+Slab&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext');
 
         * {
+        }
+
+        .button_container {
+            width: calc(100% - 20px);
+            max-width: 800px;
+            flex-direction: row-reverse;
+            flex-wrap: wrap;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
         }
 
         body {
@@ -33,10 +43,10 @@
 
         .log {
             background: #ffffff;
+            width: calc(100% - 20px);
             max-width: 800px;
             padding: 10px 10px 10px 10px;
             border: solid 3px black;
-            width: calc(100% - 20px);
             font-size: 12pt;
             font-family: 'Roboto Mono', monospace;
         }
@@ -73,7 +83,7 @@
             box-shadow: 0 10px 0 rgba(0, 0, 0, 1);
             line-height: 45pt;
             text-align: center;
-            margin: 0 0 12px 0;
+            margin: 0 2px 12px 0;
         }
 
         .button:hover {
@@ -83,6 +93,7 @@
 
         .expression {
             background: rgba(200, 0, 0, .1);
+            font-family: 'Roboto Mono', monospace;;
             padding: 5px 5px 5px 5px;
             margin: 5px 5px 5px 5px;
         }
@@ -91,15 +102,19 @@
 </head>
 <body onload="handle()">
 <textarea class="log" id="code">
-15 - 25 * 3 ^ 4 ^ 3
+x * 5
 </textarea>
-<div class="button" onclick="handle()">Обработать</div>
-<div class="result" id="result">
-Няшный результат.
+
+<div class="button_container">
+    <div class="button" onclick="handle()">Обработать</div>
+    <div class="button" id="logbutton" onclick="$('#log').show(); $('#logbutton').hide()">Показать лог</div>
 </div>
-<div class="log" id="log" style="white-space: pre" hidden>
+
+<div class="result" id="result">
+    Няшный результат.
+</div>
+<div class="log" id="log" style="white-space: pre-wrap" hidden>
 
 </div>
-<div class="button" id="logbutton" onclick="$('#log').show(); $('#logbutton').hide()">Показать лог</div>
 </body>
 </html>

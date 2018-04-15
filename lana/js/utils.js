@@ -1,28 +1,67 @@
 function render(expression) {
-    return render(expression, 100);
+    return render(expression, 100, null);
 }
 
-function render(expression, precedence) {
+function render(expression, precedence, properties) {
     $("#log").html($("#log").html() + "<hr/>" + JSON.stringify(expression, null, '\t'));
     if (expression.type == tokenType.PREPARED) {
         if (expression.hasOwnProperty('operator')) {
-            var greater = expression.operator.value[2].precedence > precedence;
-            return "<span class='expression'>" +
-                (greater ? "(" : "") +
-                render(expression.operand1, expression.operator.value[2].precedence) +
-                " " +
-                expression.operator.lexem +
-                " " +
-                render(expression.operand2, expression.operator.value[2].precedence) +
-                (greater ? ")" : "") +
-                "</span>"
+            if (
+                expression.hasOwnProperty('operand1') &&
+                expression.hasOwnProperty('operand2')
+            ) {
+
+                var greater = expression.operator.value[2].precedence > precedence ||
+                    (
+                        expression.operator.value[2].precedence == precedence &&
+                        properties != null && !properties.associative
+                    );
+
+                var properties = null;
+                if (expression.operator.value[2].hasOwnProperty("allowedTypes")) {
+                    var at = expression.operator.value[2].allowedTypes;
+                    for (p in at) {
+                        if (
+                            at[p][0] == expression.operand1.vType &
+                            at[p][0] == expression.operand2.vType
+                        ) {
+                            properties = at[p][3];
+                        }
+                    }
+                }
+
+                return "<span class='expression'>" +
+                    (greater ? "(" : "") +
+                    render(expression.operand1, expression.operator.value[2].precedence,
+                        expression.operator.value[2].associated == right ? properties : null) +
+                    " " +
+                    expression.operator.lexem +
+                    " " +
+                    render(expression.operand2, expression.operator.value[2].precedence,
+                        expression.operator.value[2].associated == left ? properties : null) +
+                    (greater ? ")" : "") +
+                    "</span>"
+            } else {
+                return "";
+            }
         } else if (expression.hasOwnProperty('value')) {
             return "<span class='expression'>" +
                 expression.value +
                 "</span>"
+        } else if (expression.hasOwnProperty('name')) {
+            return "<span class='expression'><it>" +
+                expression.name +
+                "</it></span>"
         }
-    }
-    else
+    } else if (expression.hasOwnProperty('value')) {
+        return "<span class='expression'>" +
+            expression.value +
+            "</span>"
+    } else if (expression.hasOwnProperty('name')) {
+        return "<span class='expression'><it>" +
+            expression.name +
+            "</it></span>"
+    } else
         return "";
 }
 
@@ -32,13 +71,57 @@ function calculate(expression) {
             expression.hasOwnProperty('operand1') &&
             expression.hasOwnProperty('operand2')
         ) {
-            var r = expression.operator.value[2].calculate(
-                calculate(expression.operand1),
-                calculate(expression.operand2)
+            var r1 = calculate(expression.operand1);
+            var r2 = calculate(expression.operand2);
+            if (r1.hasOwnProperty('value') && r2.hasOwnProperty('value'))
+                return expression.operator.value[2].calculate(
+                    r1, r2
+                );
+            else {
+                var properties = null;
+                if (expression.operator.value[2].hasOwnProperty('allowedTypes'))
+                var at = expression.operator.value[2].allowedTypes;
+                for (a in at)
+                    if (at[a][0] == expression.operand1.vType &&
+                        at[a][1] == expression.operand2.vType) {
+                        properties = at[a][3];
+                    }
+                if (r1.hasOwnProperty('name') && !r2.hasOwnProperty('name') &&
+                    properties != null && properties.commutative)
+                    return {
+                        type: tokenType.PREPARED,
+                        vType: expression.vType,
+                        operand1: r2,
+                        operator: expression.operator,
+                        operand2: r1
+                    };
+                else
+                    return {
+                        type: tokenType.PREPARED,
+                        vType: expression.vType,
+                        operand1: r1,
+                        operator: expression.operator,
+                        operand2: r2
+                    };
+            }
+        }
+    } else {
+        return expression;
+    }
+}
+
+function getDepth(expression) {
+    if (expression.hasOwnProperty('operator')) {
+        if (
+            expression.hasOwnProperty('operand1') &&
+            expression.hasOwnProperty('operand2')
+        ) {
+            return Math.max(
+                getDepth(expression.operand1) + 1,
+                getDepth(expression.operand2) + 1
             );
-            return r;
         }
     } else if (expression.hasOwnProperty('value')) {
-        return expression;
+        return 0;
     } else throw Error();
 }

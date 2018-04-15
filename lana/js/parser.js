@@ -26,6 +26,12 @@ function parseFrom(tokens, index) {
                     vType: "number",
                     value: t.value
                 });
+            else if (t.type === tokenType.NAME)
+                tk.push({
+                    type: tokenType.PREPARED,
+                    vType: "number",
+                    name: t.value
+                });
             else
                 tk.push(t)
         }
