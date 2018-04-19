@@ -16,6 +16,15 @@ var lexerlog = "";
 
 var lexerresult = "";
 
+Object.prototype.getKeyByValue = function (value) {
+    for (var prop in this) {
+        if (this.hasOwnProperty(prop)) {
+            if (this[prop] === value)
+                return prop;
+        }
+    }
+}
+
 function tokenize(str) {
     var curState = 0;
     const state = {
@@ -61,7 +70,11 @@ function tokenize(str) {
             if (state[st] == curState)
                 statename = st;
         }
-        var logline = ("[" + i + "], '" + c + "', state = " + statename);
+        var z = c;
+        if (Object.values(escapeCharacters).includes(z))
+            z = '\\' + escapeCharacters.getKeyByValue(z);
+
+            var logline = ("[" + i + "], '" + z + "', state = " + statename);
         log.push(logline);
 
         switch (curState) {
