@@ -2,8 +2,17 @@ const tokenType = {
     PREPARED: 0,
     NUMBER: 1,
     NAME: 2,
-    LEXEM: 3
+    LEXEM: 3,
+    STRING: 4
 };
+
+const escapeCharacters = {
+    'n': '\n',
+    't': '\t',
+    '\'': '\''
+};
+
+var lexerlog = "";
 
 function tokenize(str) {
     var curState = 0;
@@ -12,7 +21,9 @@ function tokenize(str) {
         NUMBER: curState++,
         NAME: curState++,
         LITERAL_LEXEM: curState++,
-        LEXEM: curState++
+        LEXEM: curState++,
+        STRING: curState++,
+        ESCAPE_STRING: curState++
     };
     curState = state.ANY;
     var log = [];
@@ -59,8 +70,33 @@ function tokenize(str) {
                     switchTo(state.NUMBER);
                 else if (/\w/.test(c))
                     switchTo(state.LITERAL_LEXEM);
+                else if (c === '\'')
+                    curState = state.STRING;
                 else
                     switchTo(state.LEXEM);
+            }
+                break;
+            case state.STRING: {
+                if (c === '\\')
+                    curState = state.ESCAPE_STRING;
+                else if (c === '\'') {
+                    tokens.push({
+                        type: tokenType.STRING,
+                        value: temp.join('')
+                    });
+                    switchTo(state.ANY);
+                    i++;
+                }
+                else
+                    temp.push(c);
+            }
+                break;
+            case state.ESCAPE_STRING: {
+                if (escapeCharacters.hasOwnProperty(c))
+                    temp.push(escapeCharacters[c]);
+                else
+                    temp.push(c);
+                curState = state.STRING;
             }
                 break;
             case state.NUMBER: {
@@ -161,5 +197,6 @@ function tokenize(str) {
         i++;
     }
 
+    lexerlog = log.join('</br>');
     return tokens;
 }

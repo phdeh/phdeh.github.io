@@ -118,7 +118,10 @@ const lexems = {
             associated: left,
             precedence: 7,
             allowedTypes: [
-                ['number', 'number', /**/ 'number', {associative: true, commutative: true}]
+                ['number', 'number', /**/ 'number', {associative: true, commutative: true}],
+                ['string', 'string', /**/ 'string', {associative: false, commutative: false}],
+                ['number', 'string', /**/ 'string', {associative: false, commutative: false}],
+                ['string', 'number', /**/ 'string', {associative: false, commutative: false}]
             ],
             calculate: function (a, b) {
                 if (a.vType == 'number' && b.vType == 'number')
@@ -126,7 +129,11 @@ const lexems = {
                         vType: 'number',
                         value: a.value + b.value
                     };
-                else
+                else if (a.vType == 'string' || b.vType == 'string')
+                    return {
+                        vType: 'string',
+                        value: [a.value.toString(), b.value.toString()].join('')
+                    };
                     throw TypeError();
             }
         }

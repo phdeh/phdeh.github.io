@@ -1,5 +1,9 @@
+var parserlog = "";
+
 function parse(tokens) {
-    return parseFrom(tokens, 0);
+    var r = parseFrom(tokens, 0);
+    parserlog = JSON.stringify(r, null, ' ').replace('\n', '<br/>');
+    return r
 }
 
 function parseFrom(tokens, index) {
@@ -24,6 +28,12 @@ function parseFrom(tokens, index) {
                 tk.push({
                     type: tokenType.PREPARED,
                     vType: "number",
+                    value: t.value
+                });
+            else if (t.type === tokenType.STRING)
+                tk.push({
+                    type: tokenType.PREPARED,
+                    vType: "string",
                     value: t.value
                 });
             else if (t.type === tokenType.NAME)

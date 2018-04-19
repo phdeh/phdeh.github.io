@@ -8,6 +8,15 @@
     <script src="js/parser.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
+
+        function onload() {
+            var url = window.location.href;
+            var params = parseURLParams(url);
+            var calc = params['c'];
+            if (calc != null)
+                $("#code").val(calc);
+        }
+
         function handle() {
             var code = $("#code").val();
             var tokenized = tokenize(code);
@@ -15,12 +24,15 @@
             var rendered = render(parsed);
             var calculated = render(calculate(parsed));
             $("#result").html(rendered + " = " + calculated);
+            $("#log").html(lexerlog + '<br/>' + parserlog);
+            window.history.pushState('', '', "?c=" + encodeURIComponent(code));
         }
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono:700|Roboto+Slab&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext');
 
-        * {
+        h1, h2, h3 {
+            font-family: 'Roboto Slab', serif;
         }
 
         .button_container {
@@ -39,6 +51,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
+            font-family: 'Roboto', sans-serif;
         }
 
         .log {
@@ -59,7 +72,6 @@
             font-size: 12pt;
             border: solid 3px black;
             width: calc(100% - 20px);
-            font-family: 'Roboto', sans-serif;
         }
 
         .button {
@@ -97,10 +109,16 @@
             padding: 5px 5px 5px 5px;
             margin: 5px 5px 5px 5px;
         }
+
+        .footer {
+            color: rgba(0, 0, 0, .6);
+            font-size: 10pt;
+        }
     </style>
     <title>Lana Interprier</title>
 </head>
-<body onload="handle()">
+<body onload="onload();handle()">
+<h2>Lana Interprier</h2>
 <textarea class="log" id="code">
 x * 5
 </textarea>
@@ -115,6 +133,9 @@ x * 5
 </div>
 <div class="log" id="log" style="white-space: pre-wrap" hidden>
 
+</div>
+<div class="footer">
+    копирует &copy; Воробьев 2018, все средства производства обобщены
 </div>
 </body>
 </html>

@@ -11,56 +11,68 @@ function render(expression, precedence, properties) {
                 expression.hasOwnProperty('operand2')
             ) {
 
-                var greater = expression.operator.value[2].precedence > precedence ||
-                    (
-                        expression.operator.value[2].precedence == precedence &&
-                        properties != null && !properties.associative
-                    );
-
-                var properties = null;
+                var props = null;
                 if (expression.operator.value[2].hasOwnProperty("allowedTypes")) {
                     var at = expression.operator.value[2].allowedTypes;
                     for (p in at) {
                         if (
                             at[p][0] == expression.operand1.vType &
-                            at[p][0] == expression.operand2.vType
+                            at[p][1] == expression.operand2.vType
                         ) {
-                            properties = at[p][3];
+                            props = at[p][3];
                         }
                     }
                 }
 
+                var greater = expression.operator.value[2].precedence > precedence ||
+                    (
+                        expression.operator.value[2].precedence == precedence &&
+                        (
+                            (properties != null && !(properties.associative))
+                        )
+                    );
+
                 return "<span class='expression'>" +
                     (greater ? "(" : "") +
                     render(expression.operand1, expression.operator.value[2].precedence,
-                        expression.operator.value[2].associated == right ? properties : null) +
+                        expression.operator.value[2].associated == right ? props : null) +
                     " " +
                     expression.operator.lexem +
                     " " +
                     render(expression.operand2, expression.operator.value[2].precedence,
-                        expression.operator.value[2].associated == left ? properties : null) +
+                        expression.operator.value[2].associated == left ? props : null) +
                     (greater ? ")" : "") +
                     "</span>"
             } else {
                 return "";
             }
         } else if (expression.hasOwnProperty('value')) {
-            return "<span class='expression'>" +
-                expression.value +
-                "</span>"
+            if (expression.vType == 'string')
+                return "<span class='expression'>«" +
+                    expression.value +
+                    "»</span>";
+            else
+                return "<span class='expression'>" +
+                    expression.value +
+                    "</span>";
         } else if (expression.hasOwnProperty('name')) {
             return "<span class='expression'><it>" +
                 expression.name +
-                "</it></span>"
+                "</it></span>";
         }
     } else if (expression.hasOwnProperty('value')) {
-        return "<span class='expression'>" +
-            expression.value +
-            "</span>"
+        if (expression.vType == 'string')
+            return "<span class='expression'>«" +
+                expression.value +
+                "»</span>";
+        else
+            return "<span class='expression'>" +
+                expression.value +
+                "</span>";
     } else if (expression.hasOwnProperty('name')) {
         return "<span class='expression'><it>" +
             expression.name +
-            "</it></span>"
+            "</it></span>";
     } else
         return "";
 }
@@ -80,7 +92,7 @@ function calculate(expression) {
             else {
                 var properties = null;
                 if (expression.operator.value[2].hasOwnProperty('allowedTypes'))
-                var at = expression.operator.value[2].allowedTypes;
+                    var at = expression.operator.value[2].allowedTypes;
                 for (a in at)
                     if (at[a][0] == expression.operand1.vType &&
                         at[a][1] == expression.operand2.vType) {
@@ -124,4 +136,44 @@ function getDepth(expression) {
     } else if (expression.hasOwnProperty('value')) {
         return 0;
     } else throw Error();
+}
+
+function parseURLParams(url) {
+    var queryStart = url.indexOf("?") + 1,
+        queryEnd = url.indexOf("#") + 1 || url.length + 1,
+        query = url.slice(queryStart, queryEnd - 1),
+        pairs = query.replace(/\+/g, " ").split("&"),
+        parms = {}, i, n, v, nv;
+
+    if (query === url || query === "") return;
+
+    for (i = 0; i < pairs.length; i++) {
+        nv = pairs[i].split("=", 2);
+        n = decodeURIComponent(nv[0]);
+        v = decodeURIComponent(nv[1]);
+
+        if (!parms.hasOwnProperty(n)) parms[n] = [];
+        parms[n].push(nv.length === 2 ? v : null);
+    }
+    return parms;
+}
+
+function updateURLParameter(url, param, paramVal) {
+    var newAdditionalURL = "";
+    var tempArray = url.split("?");
+    var baseURL = tempArray[0];
+    var additionalURL = tempArray[1];
+    var temp = "";
+    if (additionalURL) {
+        tempArray = additionalURL.split("&");
+        for (var i = 0; i < tempArray.length; i++) {
+            if (tempArray[i].split('=')[0] != param) {
+                newAdditionalURL += temp + tempArray[i];
+                temp = "&";
+            }
+        }
+    }
+
+    var rows_txt = temp + "" + param + "=" + paramVal;
+    return baseURL + "?" + newAdditionalURL + rows_txt;
 }
