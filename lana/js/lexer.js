@@ -14,6 +14,8 @@ const escapeCharacters = {
 
 var lexerlog = "";
 
+var lexerresult = "";
+
 function tokenize(str) {
     var curState = 0;
     const state = {
@@ -198,5 +200,6 @@ function tokenize(str) {
     }
 
     lexerlog = log.join('</br>');
+    lexerresult = JSON.stringify(tokens, null, ' ').replace("\n", '<br/>')
     return tokens;
 }

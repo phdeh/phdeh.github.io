@@ -24,7 +24,7 @@
             var rendered = render(parsed);
             var calculated = render(calculate(parsed));
             $("#result").html(rendered + " = " + calculated);
-            $("#log").html(lexerlog + '<br/>' + parserlog);
+            $("#log").html(lexerlog + '<hr/><br/>' + lexerresult + '<hr/><br/>' + parserlog);
             window.history.pushState('', '', "?c=" + encodeURIComponent(code));
         }
     </script>
