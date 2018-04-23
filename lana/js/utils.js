@@ -43,8 +43,16 @@ function render(expression, precedence, properties) {
                         expression.operator.value[2].associated == left ? props : null) +
                     (greater ? ")" : "") +
                     "</span>"
-            } else {
-                return "";
+            } else if (
+                expression.hasOwnProperty('operand')
+            ) {
+                var greater = getDepth(expression.operand) != 0;
+                return "<span class='expression'>" +
+                    expression.operator.lexem +
+                    (greater ? "(" : "") +
+                    render(expression.operand, 0, null) +
+                    (greater ? ")" : "") +
+                    "</span>"
             }
         } else if (expression.hasOwnProperty('value')) {
             if (expression.vType == 'string')
@@ -132,6 +140,8 @@ function getDepth(expression) {
                 getDepth(expression.operand1) + 1,
                 getDepth(expression.operand2) + 1
             );
+        } else if (expression.hasOwnProperty('operand')) {
+            return getDepth(expression.operand) + 1;
         }
     } else if (expression.hasOwnProperty('value')) {
         return 0;

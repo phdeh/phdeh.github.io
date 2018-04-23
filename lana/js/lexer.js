@@ -44,7 +44,7 @@ function tokenize(str) {
     var i = 0;
 
     function error(a) {
-        alert(a);
+
     }
 
     function doNothing() {

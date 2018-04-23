@@ -126,11 +126,13 @@ const lexems = {
             calculate: function (a, b) {
                 if (a.vType == 'number' && b.vType == 'number')
                     return {
+                        type: tokenType.PREPARED,
                         vType: 'number',
                         value: a.value + b.value
                     };
                 else if (a.vType == 'string' || b.vType == 'string')
                     return {
+                        type: tokenType.PREPARED,
                         vType: 'string',
                         value: [a.value.toString(), b.value.toString()].join('')
                     };
@@ -148,6 +150,7 @@ const lexems = {
             calculate: function (a, b) {
                 if (a.vType == 'number' && b.vType == 'number')
                     return {
+                        type: tokenType.PREPARED,
                         vType: 'boolean',
                         value: a.value == b.value
                     };
@@ -160,8 +163,26 @@ const lexems = {
         2: {
             associated: left,
             precedence: 17,
+            allowedTypes: [
+                ['number', 'number', /**/ 'sequence', {associative: false, commutative: false}],
+                ['string', 'string', /**/ 'sequence', {associative: false, commutative: false}]
+            ],
             calculate: function (a, b) {
-                return b;
+                if (a.vType == 'sequence') {
+                    var arr = a.value.slice(0);
+                    arr.push(b);
+                    return {
+                        type: tokenType.PREPARED,
+                        vType: 'sequence',
+                        value: arr
+                    };
+                } else {
+                    return {
+                        type: tokenType.PREPARED,
+                        vType: 'sequence',
+                        value: [a, b]
+                    };
+                }
             }
         }
     },
