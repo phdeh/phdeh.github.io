@@ -36,14 +36,15 @@ input[type=number]::-webkit-outer-spin-button {
 
 .img_container {
     width: 100%;
-    flex-direction: row-reverse;
+    flex-direction: row;
     display: flex;
-    align-items: flex-end;
+    justify-content: center;
+    align-items: center;
 }
 
 .img_container > img {
     width: 100%;
-    max-width: 600px;
+    max-width: 800px;
 }
 
 .content_block {
@@ -73,8 +74,16 @@ p {
     word-wrap: break-word;
 }
 
+.answer, .hAnswer {
+    margin: 10px;
+    padding: 10px;
+    border: 3px solid black;
+    background: white;
+    width: calc(100% - 36px);
+}
+
 a {
-    color: #DD0000;
+    color: #330000;
 }
 
 .author > a {
