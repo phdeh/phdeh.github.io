@@ -15,8 +15,8 @@
             }
         }
 
-        function show(id) {
-            var target = event.target || event.srcElement;
+        function show(e, id) {
+            var target = e || event.target || event.srcElement;
             if (target.innerHTML === '[+]') {
                 target.innerHTML = '[–]';
                 document.getElementById(id).hidden = false;
@@ -40,9 +40,9 @@
         </div>
 
         <div class="exercise" id="work0">
-            <h2>Дополнительные вопросы <a href="javascript:void(0)" onclick="show('voprosi')">[+]</a></h2>
+            <h2>Дополнительные вопросы <a href="javascript:void(0)" onclick="show(event, 'voprosi')">[+]</a></h2>
             <ol id="voprosi" hidden>
-                <li>Компьютер <a href="javascript:void(0)" onclick="show('komputer')">[+]</a>
+                <li>Компьютер <a href="javascript:void(0)" onclick="show(event, 'komputer')">[+]</a>
                     <div id="komputer" class="hAnswer">
                         <p>Существует множество различных формулировок понятия ЭВМ от достаточно простых и понятных до
                             чрезмерно
@@ -61,7 +61,7 @@
                         <p align="right"><a href="q/1.pdf">Больше</a></p>
                     </div>
                 </li>
-                <li>Алгоритм <a href="javascript:void(0)" onclick="show('algoritm')">[+]</a>
+                <li>Алгоритм <a href="javascript:void(0)" onclick="show(event, 'algoritm')">[+]</a>
                     <div id="algoritm" class="hAnswer">
                         <p>Под алгоритмом понимается: конечный набор точных и понятных предписаний (правил,
                             инструкций, команд),
@@ -85,7 +85,7 @@
                         <p align="right"><a href="q/2.pdf">Больше</a></p>
                     </div>
                 </li>
-                <li>Архитектура <a href="javascript:void(0)" onclick="show('architektura')">[+]</a>
+                <li>Архитектура <a href="javascript:void(0)" onclick="show(event, 'architektura')">[+]</a>
                     <div id="architektura" class="hAnswer">
                         <p>Компьютерная архитектура, как и другая архитектура, — это искусство определения потребностей
                             пользователя структуры, а затем проектирования для максимально эффективного удовлетворения
@@ -101,7 +101,7 @@
                         <p align="right"><a href="q/1.pdf">Больше</a></p>
                     </div>
                 </li>
-                <li>Архитектура фон Неймона <a href="javascript:void(0)" onclick="show('architekturaVon')">[+]</a>
+                <li>Архитектура фон Неймона <a href="javascript:void(0)" onclick="show(event, 'architekturaVon')">[+]</a>
                     <div id="architekturaVon" class="hAnswer">
                         <p>
                             В 40-х годах известный математик Джон фон Нейман пришёл к выводу, что вычислительные
@@ -144,7 +144,7 @@
                         <p align="right"><a href="q/2.pdf">Больше</a></p>
                     </div>
                 </li>
-                <li>Компьютер фон Неймона <a href="javascript:void(0)" onclick="show('komputerVon')">[+]</a>
+                <li>Компьютер фон Неймона <a href="javascript:void(0)" onclick="show(event, 'komputerVon')">[+]</a>
                     <div id="komputerVon" class="hAnswer">
                         <p>
                             Эти Компьютеры относятся к типу фон-неймановских или, как их еще иначе называют,
@@ -190,7 +190,7 @@
                         <p align="right"><a href="q/2.pdf">Больше</a></p>
                     </div>
                 </li>
-                <li>Гарвардская архитектура <a href="javascript:void(0)" onclick="show('garvard')">[+]</a>
+                <li>Гарвардская архитектура <a href="javascript:void(0)" onclick="show(event, 'garvard')">[+]</a>
                     <div id="garvard" class="hAnswer">
                         <p>
                             В гарвардской архитектуре принципиально невозможно осуществить операцию записи в память
