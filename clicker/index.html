@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Buttons</title>
+    <script>
+        var buttons = {"Q": 81, "W": 87, "E": 69, "I": 73, "O": 79, "P": 80};
+        var currentButton;
+        var supercounter = 0;
+        var counter = 0;
+        var step = 1;
+        var backstep = 1;
+        var limit = 10;
+        var counterElement;
+
+        function onload() {
+            currentButton = Object.keys(buttons)[Math.floor(Math.random() * Object.keys(buttons).length)];
+
+            document.getElementById(currentButton).className = "enabled_button";
+
+            counterElement = document.getElementById('counter');
+
+            document.addEventListener('keydown', function (event) {
+                for (b in buttons)
+                    if (buttons[b] == event.keyCode)
+                        handleClick(b);
+            });
+        }
+
+        function handleClick(b) {
+            if (b == currentButton) {
+                counter+=step;
+                supercounter+=step;
+                if (counter >= limit) {
+                    step *= 2;
+                    backstep *= 3;
+                    limit *= 10;
+                }
+                var cb = null;
+                do {
+                    cb = Object.keys(buttons)[Math.floor(Math.random() * Object.keys(buttons).length)];
+                } while (cb == currentButton);
+                document.getElementById(currentButton).className = "disabled_button";
+                currentButton = cb;
+                document.getElementById(currentButton).className = "enabled_button";
+            } else
+                counter-=backstep;
+            counterElement.innerText = counter;
+        }
+    </script>
+    <style>
+        * {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            font-family: sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0px;
+            background: lightgrey;
+        }
+
+        .enabled_button, .disabled_button {
+            font-size: 24pt;
+            width: 50px;
+            text-align: center;
+            cursor: pointer;
+            color: white;
+            text-shadow: 0 -2px 0 black;
+            border-radius: 25px;
+            margin: 10px;
+            box-shadow: 0 5px 0 black;
+            padding: 24px;
+            font-weight: bold;
+        }
+
+        .enabled_button:hover, .disabled_button:hover {
+            transform: translate(0, 5px);
+            box-shadow: none;
+        }
+
+        .enabled_button {
+            background: dodgerblue;
+        }
+
+        .disabled_button {
+            background: dimgrey;
+        }
+
+        .counter_element {
+            margin-top: 10%;
+            cursor: default;
+            font-size: 91pt;
+        }
+
+        .box {
+            display: flex;
+        }
+
+        .sub_box1, .sub_box2 {
+            display: flex;
+            margin-top: 10%;
+            flex-wrap: wrap-reverse;
+        }
+
+        .sub_box1 {
+            flex-direction: row-reverse;
+        }
+    </style>
+</head>
+<body onload="onload();">
+<div id="counter" class="counter_element">0</div>
+<div class="box">
+    <div class="sub_box1">
+        <div id="E" class="disabled_button" onclick='handleClick("E")'>E</div>
+        <div id="W" class="disabled_button" onclick='handleClick("W")'>W</div>
+        <div id="Q" class="disabled_button" onclick='handleClick("Q")'>Q</div>
+    </div>
+    <div class="sub_box2">
+        <div id="I" class="disabled_button" onclick='handleClick("I")'>I</div>
+        <div id="O" class="disabled_button" onclick='handleClick("O")'>O</div>
+        <div id="P" class="disabled_button" onclick='handleClick("P")'>P</div>
+    </div>
+</div>
+</body>
+</html>
