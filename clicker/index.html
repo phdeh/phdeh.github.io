@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Buttons</title>
     <script>
+        var audios = {};
         var buttons = {"Q": 81, "W": 87, "E": 69, "I": 73, "O": 79, "P": 80};
         var currentButton;
         var supercounter = 0;
@@ -15,6 +16,12 @@
         var counterElement;
 
         function onload() {
+            var i = 0;
+            "QWEIOP!".split("").forEach(function (value) {
+                audios[value] = document.getElementById("a" + i);
+                i++;
+            });
+
             currentButton = Object.keys(buttons)[Math.floor(Math.random() * Object.keys(buttons).length)];
 
             document.getElementById(currentButton).className = "enabled_button";
@@ -30,8 +37,10 @@
 
         function handleClick(b) {
             if (b == currentButton) {
-                counter+=step;
-                supercounter+=step;
+                audios[currentButton].currentTime = 0;
+                audios[currentButton].play();
+                counter += step;
+                supercounter += step;
                 if (counter >= limit) {
                     step *= 2;
                     backstep *= 3;
@@ -44,8 +53,11 @@
                 document.getElementById(currentButton).className = "disabled_button";
                 currentButton = cb;
                 document.getElementById(currentButton).className = "enabled_button";
-            } else
-                counter-=backstep;
+            } else {
+                audios['!'].currentTime = 0;
+                audios['!'].play();
+                counter -= backstep;
+            }
             counterElement.innerText = counter;
         }
     </script>
@@ -97,7 +109,7 @@
         }
 
         .counter_element {
-            margin-top: 10%;
+            margin-top: 5%;
             cursor: default;
             font-size: 91pt;
         }
@@ -118,6 +130,13 @@
     </style>
 </head>
 <body onload="onload();">
+<audio id="a0" preload="metadata"><source src="sounds/1.mp3" type="audio/mp3"></audio>
+<audio id="a1" preload="metadata"><source src="sounds/1.mp3" type="audio/mp3"></audio>
+<audio id="a2" preload="metadata"><source src="sounds/2.mp3" type="audio/mp3"></audio>
+<audio id="a3" preload="metadata"><source src="sounds/3.mp3" type="audio/mp3"></audio>
+<audio id="a4" preload="metadata"><source src="sounds/4.mp3" type="audio/mp3"></audio>
+<audio id="a5" preload="metadata"><source src="sounds/5.mp3" type="audio/mp3"></audio>
+<audio id="a6" preload="metadata"><source src="sounds/6.mp3" type="audio/mp3"></audio>
 <div id="counter" class="counter_element">0</div>
 <div class="box">
     <div class="sub_box1">
